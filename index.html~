@@ -7,7 +7,7 @@
 
 <html lang="en">
 <head>
-  <title>John Doe</title>
+  <title>İsmail Hakkı Turan</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -53,24 +53,26 @@
                 <!-- Main Image -->
                 <img class="img-responsive" src="photo.gif" alt=""><br>
                 
-                <div style="margin-top:3%; text-align:justify;">                
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing <a href="#">elit</a>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <div style="margin-top:3%; text-align:justify;">  
 					
-					<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+					<p>Google Scholar <a href="https://scholar.google.com"> for related works</a>, can search in different indexes like ACM, IEEE, Wiley, Springer, Elsevier, TR-Dizin.</p>
+			
+					<p>Contiki-NG<a href="https://www.sciencedirect.com/science/article/pii/S2352711022000620"> Article</a>, on SoftwareX journal.</p>
 					
-					<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+					<p>Cooja Simulator Download Steps for <a href="https://www.youtube.com/watch?v=zfA9BINRvVk"> Windows</a></p>
+					
                 </div>
             </div> 
 
             <!-- Contact Info on the Sidebar -->
             <div class="col-md-4">
-                <div style="font-family: 'Oswald', sans-serif; font-size: 32px;"><b>John Doe</b></div><br>
+                <div style="font-family: 'Oswald', sans-serif; font-size: 32px;"><b>İsmail Hakkı Turan</b></div><br>
                 <p><b>john at doe.com</b><br>
                 <p>Random Department<br>
-                University of Randomness<br>
-                Street<br>
-                City <br>
-                Country<br>
+                OMÜ<br>
+                Atakum<br>
+                Samsun <br>
+                Türkiye<br>
                 </p>
             </div>
             
