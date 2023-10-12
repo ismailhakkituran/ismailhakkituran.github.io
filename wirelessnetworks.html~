@@ -45,7 +45,17 @@
 	  </div>
 	</nav>
 	
-	
+	            <!-- Contact Info on the Sidebar -->
+            <div class="col-md-4">
+                <div style="font-family: 'Oswald', sans-serif; font-size: 32px;"><b>İsmail Hakkı Turan</b></div><br>
+                <p><b>bil omu mail address</b><br>
+                <p>Computer Engineering Department<br>
+                OMÜ<br>
+                Atakum<br>
+                Samsun <br>
+                Türkiye<br>
+                </p>
+            </div>
   
   <!-- Page Content -->
     <div class="container">

@@ -59,7 +59,7 @@
                 <div style="margin-top:2%; margin-left:40px; text-align:justify;">  
                 <h1>Courses</h1>
                 <div style="margin-top:2%; margin-left:40px; text-align:justify;">  
-		<p><a href="wirelessnetworks.html">WSN</a>(KSA) Applications <i>Updated 12.10.2023</i></p>
+		<p><a href="wirelessnetworks.html">WSN</a>(KSA) Applications <i>(Updated 12.10.2023)</i></p>
 		<p><a href="#">System Programming</a> Applications</p>
 		<p><a href="#">Operating Systems</a> Applications</p>
             </div>
@@ -67,7 +67,7 @@
             
             
             
-            <!-- Links on the Sidebar -->
+
           <p>   <!--div class="col-md-4" style="margin-top:2%"-->
             <h1>Publications</h1>
 
@@ -91,6 +91,21 @@
 
             
         </div>
+
+
+                    <!-- Contact Info on the Sidebar -->
+            <div class="col-md-4">
+                <div style="font-family: 'Oswald', sans-serif; font-size: 32px;"><b>İsmail Hakkı Turan</b></div><br>
+                <p><b>bil omu mail address</b><br>
+                <p>Computer Engineering Department<br>
+                OMÜ<br>
+                Atakum<br>
+                Samsun <br>
+                Türkiye<br>
+                </p>
+            </div>
+            
+
 
 
     </div>
