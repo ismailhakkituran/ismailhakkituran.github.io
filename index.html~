@@ -74,7 +74,7 @@
 	 <div style="margin-top:2%; margin-left:40px; text-align:justify;">  
 	 
 	 
-	 <p><i>Protocol Stack-Aware Comparison of Centroid Localization Algorithms Based on Anchor Density Using Cooja</i><a href="Protocol Stack-Aware Comparison of Centroid Localization Algorithms Based on Anchor Density Using Cooja"> SmartNets Conference 2023</a></p>
+	 <p><i>Protocol Stack-Aware Comparison of Centroid Localization Algorithms Based on Anchor Density Using Cooja</i><a href="https://ieeexplore.ieee.org/abstract/document/10216113"> SmartNets Conference 2023</a></p>
 	 
 	 </div>
 	<p>   <!--div class="col-md-4" style="margin-top:2%"-->
@@ -102,7 +102,7 @@
     
     <!-- Other people may like it too! -->
                 <!-- Contact Info on the Sidebar -->
-            <div class="col-md-4">
+            <div class="col-md-4" "style="margin-top:40px;">
                 <div style="font-family: 'Oswald', sans-serif; font-size: 32px;"><b>İsmail Hakkı Turan</b></div><br>
                 <p><b>bil omu mail address</b><br>
                 <p>Computer Engineering Department<br>
