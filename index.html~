@@ -53,9 +53,11 @@
                 <!-- Main Image -->
                 <img class="img-responsive" src="localztnew.png" alt=""><br>
                 
-                <div style="margin-top:3%; text-align:justify;">  
+                <div style="margin-top:2%; margin-left:40px; text-align:justify;">  
 		<h1>WSN(KSA) Application Courses</h1>
+		<div style="margin-left:40px; text-align:justify;">  
 		<h2>1st Week(11.10.2023)</h2>
+		<div style="margin-left:40px; text-align:justify;"> 
 		<h3>Installation Guide</h3>
                
 <p>Setup Contiki NG and Cooja IoT Network Simulator<a href="https://www.youtube.com/watch?v=zfA9BINRvVk"> Windows</a></p>               
@@ -79,15 +81,19 @@
 			
 <p>Contiki-NG<a href="https://www.sciencedirect.com/science/article/pii/S2352711022000620"> Article</a>, on SoftwareX journal.</p>
 
-
 <p>Historical ContikiOS<a href="https://neilklingensmith.com/teaching/loyola/cs310-f2022/readings/contiki.pdf"> Article</a></p>
                		
 <p>Google Scholar <a href="https://scholar.google.com"> for related works</a>, can search in different indexes like ACM, IEEE, Wiley, Springer, Elsevier, TR-Dizin.</p>   
 
 <h3>İlerleme Sayacı <strong>ÖNEMLİ !</strong></h3>
 			
-<p>Lütfen <a href="https://www.sciencedirect.com/science/article/pii/S2352711022000620"> formu</a> bir sonraki uygulama dersine kadar doldurunuz.</p>
-        	
+<p>Lütfen <a href="https://forms.gle/MxV44mwgEBo9McnD6"> formu</a> bir sonraki uygulama dersine kadar doldurunuz.</p>
+
+<p>
+</div>
+		<h2>2nd Week(18.10.2023)</h2>
+		<h3>...</h3>
+        	</div>
                 </div>
             </div> 
 
