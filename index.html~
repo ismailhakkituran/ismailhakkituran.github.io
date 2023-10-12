@@ -34,6 +34,9 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		  <ul class="nav navbar-nav">
 				  <li><a href="index.html">Home</a></li>
+				  <li><a href="wirelessnetworks.html">WSNs</a></li>
+				  <li><a href="index.html">System Programming</a></li>
+				  <li><a href="index.html">Operating Systems</a></li>
 				  <li><a href="#">Projects</a></li>
 				  <li><a href="#publications">Publications</a></li> 
 				  <li><a href="#">CV</a></li> 
@@ -51,83 +54,32 @@
             <div class="col-md-8" style="height: 200vh;">
                 
                 <!-- Main Image -->
-                <img class="img-responsive" src="localztnew.png" alt=""><br>
+                <img class="img-responsive"  width="700" src="localztnew.png" alt=""><br>
                 
                 <div style="margin-top:2%; margin-left:40px; text-align:justify;">  
-		<h1>WSN(KSA) Application Courses</h1>
-		<div style="margin-left:40px; text-align:justify;">  
-		<h2>1st Week(11.10.2023)</h2>
-		<div style="margin-left:40px; text-align:justify;"> 
-		<h3>Installation Guide</h3>
-               
-<p>Setup Contiki NG and Cooja IoT Network Simulator<a href="https://www.youtube.com/watch?v=zfA9BINRvVk"> Windows</a></p>               
-<p>Setup Contiki NG and Cooja IoT Network Simulator<a href="https://www.youtube.com/watch?v=a4radETt04U"> Linux</a></p>
-<p>Setup Contiki NG and Cooja IoT Network Simulator<a href="https://www.youtube.com/watch?v=r70XcmXZNoI"> macOS</a></p>
-<p>Contiki-NG<a href="https://github.com/contiki-ng/contiki-ng/wiki"> Documentation</a></p>
-
-           <p>  
-           
-    		<h3>Running Cooja Guide</h3>       
- <p>Running <a href="https://docs.contiki-ng.org/en/develop/doc/tutorials/Running-Contiki-NG-in-Cooja.html#running-cooja-without-gui">Cooja</a> simulator</p>
- 
- <p>          
-		<h3>Examples Guide</h3>
-               
-<p><i>contiki-ng/examples/hello-world</i> : Add <strong>n</strong> number of <i>hello-world</i> flashed motes and run the simulation to observe the output.</p>               
-<p><i>contiki-ng/examples/hello-world</i> : Add <strong>1</strong> number of <i>udp-server</i> firmware and add <strong>n</strong> number of <i>udp-client</i> firmware and run, then change the destination address in a udp-client mote then observe the outputs.</p>
-
-           <p>             
-<h3>Reading Guide</h3>
-			
-<p>Contiki-NG<a href="https://www.sciencedirect.com/science/article/pii/S2352711022000620"> Article</a>, on SoftwareX journal.</p>
-
-<p>Historical ContikiOS<a href="https://neilklingensmith.com/teaching/loyola/cs310-f2022/readings/contiki.pdf"> Article</a></p>
-               		
-<p>Google Scholar <a href="https://scholar.google.com"> for related works</a>, can search in different indexes like ACM, IEEE, Wiley, Springer, Elsevier, TR-Dizin.</p>   
-
-<h3>İlerleme Sayacı <strong>ÖNEMLİ !</strong></h3>
-			
-<p>Lütfen <a href="https://forms.gle/MxV44mwgEBo9McnD6"> formu</a> bir sonraki uygulama dersine kadar doldurunuz.</p>
-
-<p>
-</div>
-		<h2>2nd Week(18.10.2023)</h2>
-		<h3>...</h3>
-        	</div>
-                </div>
-            </div> 
-
-            <!-- Contact Info on the Sidebar -->
-            <div class="col-md-4">
-                <div style="font-family: 'Oswald', sans-serif; font-size: 32px;"><b>İsmail Hakkı Turan</b></div><br>
-                <p><b>bil omu mail address</b><br>
-                <p>Computer Engineering Department<br>
-                OMÜ<br>
-                Atakum<br>
-                Samsun <br>
-                Türkiye<br>
-                </p>
-            </div>
-            
-                        <div class="col-md-8" style="height: 100vh;">    
-                <h2 id="publications">Publications</h2>
-                
-                <strong>Peer-reviewed</strong><br/>
-                <ul>
-                <li class="paper" words="add, your, keywords, here"><a href="#">Full tttitle</a> Names of the authors</li>
-                </ul>
-            
-                <strong>Technical Reports</strong><br/>
-                <ul>
-                <li class="paper" words="add, your, keywords, here"><a href="#">Full title</a>. Details of the report</li>
-                </ul>
+                <h1>Courses</h1>
+                <div style="margin-top:2%; margin-left:40px; text-align:justify;">  
+		<p><a href="wirelessnetworks.html">WSN</a>(KSA) Applications <i>Updated 12.10.2023</i></p>
+		<p><a href="#">System Programming</a> Applications</p>
+		<p><a href="#">Operating Systems</a> Applications</p>
             </div>
             
             
             
             
             <!-- Links on the Sidebar -->
-            <div class="col-md-4" style="margin-top:2%">
+          <p>   <!--div class="col-md-4" style="margin-top:2%"-->
+            <h1>Publications</h1>
+
+	 <div style="margin-top:2%; margin-left:40px; text-align:justify;">  
+	 
+	 
+	 <p><i>Protocol Stack-Aware Comparison of Centroid Localization Algorithms Based on Anchor Density Using Cooja</i><a href="Protocol Stack-Aware Comparison of Centroid Localization Algorithms Based on Anchor Density Using Cooja"> SmartNets Conference 2023</a></p>
+	 
+	 </div>
+	<p>   <!--div class="col-md-4" style="margin-top:2%"-->
+            <h1>Social Links</h1>
+            	 <div style="margin-top:2%; margin-left:40px; text-align:justify;">  
               <dd><a href="https://scholar.google.com/citations?user=YV7fkQUAAAAJ&hl=tr&oi=ao">Google Scholar</a></dd> 
               <dd><a href="https://twitter.com/ismylhakkituran">Twitter</a></dd>
               <dd><a href="https://tr.linkedin.com/in/ismail-hakk%C4%B1-turan-09020831">LinkedIn</a></dd>
