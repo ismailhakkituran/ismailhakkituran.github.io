@@ -77,7 +77,7 @@
 		<h3>Examples Guide</h3>
                
 <p><i>contiki-ng/examples/hello-world</i> : Add <strong>n</strong> number of <i>hello-world</i> flashed motes and run the simulation to observe the output.</p>               
-<p><i>contiki-ng/examples/hello-world</i> : Add <strong>1</strong> number of <i>udp-server</i> firmware and add <strong>n</strong> number of <i>udp-client</i> firmware and run, then change the destination address in a udp-client mote then observe the outputs.</p>
+<p><i>contiki-ng/examples/rpl-udp</i> : Add <strong>1</strong> number of <i>udp-server</i> firmware and add <strong>n</strong> number of <i>udp-client</i> firmware and run, then change the destination address in a udp-client mote then observe the outputs.</p>
 
            <p>             
 <h3>Reading Guide</h3>
@@ -92,14 +92,121 @@
 			
 <p>Lütfen <a href="https://forms.gle/MxV44mwgEBo9McnD6"> formu</a> bir sonraki uygulama dersine kadar doldurunuz.</p>
 
+<p> 
+ 
+<h3>WSN mote to Low Orbit Satallite Connection</h3> 
+<p>Turkish-made mini satallite <a href="https://hellospace.ist/"> company</a> that collects data from WSN nodes discussed in the course. Live <a href="https://www.n2yo.com/?s=56230&live=1"> position</a> in the <a href="https://www.n2yo.com/satellite/?s=56230#results"> orbit</a>.</p>
+
 <p>
+
+
 </div>
 		<h2>2nd Week(18.10.2023)</h2>
 		<div style="margin-left:40px; text-align:justify;"> 
-		<h3>...</h3>
-		</div>
+		<h3>(Optional) Shell Scripting Tutorial</h3> 
+<p>A quick catch-up with <a href="https://www.youtube.com/watch?v=tK9Oc6AEnR4">shell</a> basics.</p>
+		<h3>Abstraction with function pointers in C Language</h3> 
+		<h4>1. A blog post about function pointers.</h4>
+		<ul>
+  		<li>	
+		<p>Click <a href="https://markkevinbaltazar.medium.com/function-pointers-in-c-c044f62313cb">the page</a></p>
+		</li>
+		</ul>
+		<h4>2. Another example about C style interface design.</h4>
+		<ul>
+  		<li>
+		<p>Click <a href="https://www.cs.swarthmore.edu/~kwebb/cs31/s15/bucs/abstration.html#abstraction-code">the page</a> for Example 1.1.</p>
+		</li>
+		<li>
+		<p>Interface design at line 4th</p>
+		</li>
+		<li>
+		<p>Implementation of interface functions at line 11th and 18th</p>
+		</li>
+		<li>
+		<p>Implementation of interface struct at line 25th</p>
+		</li>
+		<li>
+		<p>Main only calls interface at line 35th and 36th</p>
+		</li>
+		</ul>
+		<h4>3. Another example about C style interface design.</h4> 
+		<ul>
+  		<li>				
+ 		<p>Example 1.2. is from <a href="https://www.cs.swarthmore.edu/~kwebb/cs31/s15/bucs/abstration.html#virtio-abstraction">Linux</a> kernel.</p>
+ 		</li></ul>
+ 		<h4>4. Another example about C style interface design.</h4> 
+ 		<ul><li>		
+ 		<p>Contiki-NG routing layer interface design. <i>contiki-ng/os/net/routing/routing.h</i></p>		
+ 		</li></ul>
+ 		
+ 		<h4>(EXTRA) sorting example about C style interface design.</h4> 		
+ 		<ul><li>
+ 		<p>An educational <a href="https://www.cs.princeton.edu/courses/archive/fall05/cos217/lectures/08FuncPointerADT.pdf">slide</a>. <i>(Please go to 10th page)</i></p>
+ 		</li></ul>
+
+ 		<h4>(EXTRA) Design Principles with Pointer Parameters and Functions.</h4> 		
+ 		<ul><li>
+ 		<p>An educational <a href="https://www.youtube.com/watch?app=desktop&v=eJ_Wt34dDXU">video</a>. <i>(You can translate the subtitles to Turkish)</i></p>
+ 		</li></ul>
+ 		
+
+
+
+		<h3>Contiki-NG Network Layers Code Reading</h3>
+	<ul><li>
+	<p>Contiki-NG routing layer <b>interface design header</b>.</p>
+	<p><i>contiki-ng/os/net/routing/routing.h</i></p>	
+	</li>
+	
+	<li><p><b>(IMPORTANT)</b> Read the Contiki-NG routing layer interface <b>rpl-lite implementation</b> files in the:</p>
+	<p>Contiki-NG routing layer interface implementation called rpl-lite (Default routing algorithm).</p>
+	<p><i>contiki-ng/os/net/routing/rpl-lite/*</i></p>
+	<p>Matching <i>routing.h</i> interface function names with <b>rpl-lite</b>  functions</p>
+	<p>Look for <b>const struct routing_driver</b> variable in the:</p>
+	<p><i>contiki-ng/os/net/routing/rpl-lite/rpl.c</i></p>	
+	</li>
 		
-        	</div>
+	
+	
+	<li>
+	
+	<p><b>(OPTIONAL)</b> Read the Contiki-NG routing layer interface <b>nullrouting implementation</b> files in the:</p>
+	<p><i>contiki-ng/os/net/routing/nullrouting/*</i></p>
+	<p>Matching <i>routing.h</i> interface function names with <b>nullrouting</b>  functions</p>
+	<p>Look for <b>const struct routing_driver</b> variable in the:</p>
+	<p><i>contiki-ng/os/net/routing/nullrouting/nullrouting.c</i></p>	
+	</li>
+	<li>
+	<p><b>(OPTIONAL)</b> Read the Contiki-NG routing layer interface <b>rpl-classic implementation</b> files in the:</p>
+	<p><i>contiki-ng/os/net/routing/rpl-classic/*</i></p>
+	<p>Matching <i>routing.h</i> interface function names with <b>rpl-classic</b>  functions</p>
+	<p>Look for <b>const struct routing_driver</b> variable in the:</p>
+	<p><i>contiki-ng/os/net/routing/rpl-classic/rpl.c</i></p>	
+	</li>
+	
+
+	
+	</ul>
+	<h3>İlerleme Sayacı <strong>ÖNEMLİ !</strong></h3>
+		
+	<ul><li>		
+<p>Lütfen <a href="https://forms.gle/fSjwLGfx5fJV8FeV8"> yeni formu</a> bir sonraki uygulama dersine kadar doldurunuz.</p></li>
+	<li>
+<p>Önceki uygulama dersi adımlarını geç de olsa bitiren arkadaşlar lütfen<a href="https://forms.gle/MxV44mwgEBo9McnD6"> eski formu</a> da doldurunuz.</p></li>
+
+	</ul>
+<p> <p> 
+		</div>	
+		<h2>3rd Week</h2>
+		<div style="margin-left:40px; text-align:justify;"> 
+		<h3>...</h3> 
+				<ul><li>
+		</li></ul>
+		
+</div>
+		
+        	
                 </div>
             </div> 
 
