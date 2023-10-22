@@ -56,12 +56,7 @@
             <div class="col-md-8" style="height: 200vh;">
                 
                 <!-- Main Image -->
-                <figure>
-                <img class="img-responsive"  width="700" src="IBM_Electronic_Data_Processing_Machine.jpg" alt="">
-                <figcaption>Lois Haibt</figcaption>
-</figure>
-                
-                <br>
+                <img class="img-responsive"  width="700" src="IBM_Electronic_Data_Processing_Machine.jpg" alt=""><br>
                 
                 <div style="margin-top:2%; margin-left:40px; text-align:justify;">  
 		<h1>System Programming Course</h1>
