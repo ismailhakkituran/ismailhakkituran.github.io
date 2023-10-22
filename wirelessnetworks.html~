@@ -121,13 +121,13 @@
 		<p>Interface design at line 4th</p>
 		</li>
 		<li>
-		<p>Implementation of interface functions at line 11th and 18th</p>
+		<p>Implementation of interface functions at lines 11th and 18th</p>
 		</li>
 		<li>
 		<p>Implementation of interface struct at line 25th</p>
 		</li>
 		<li>
-		<p>Main only calls interface at line 35th and 36th</p>
+		<p>Main only calls interface at lines 35th and 36th</p>
 		</li>
 		</ul>
 		<h4>3. Another example about C style interface design.</h4> 
