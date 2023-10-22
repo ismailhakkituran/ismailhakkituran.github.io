@@ -35,11 +35,11 @@
 		  <ul class="nav navbar-nav">
 				  <li><a href="index.html">Home</a></li>
 				  <li><a href="wirelessnetworks.html">WSNs</a></li>
-				  <li><a href="index.html">System Programming</a></li>
+				  <li><a href="systemprogramming.html">System Programming</a></li>
 				  <li><a href="index.html">Operating Systems</a></li>
-				  <li><a href="#">Projects</a></li>
-				  <li><a href="#publications">Publications</a></li> 
-				  <li><a href="#">CV</a></li> 
+				  <li><a href="index.html">Projects</a></li>
+				  <li><a href="index.html">Publications</a></li> 
+				  <li><a href="index.html">CV</a></li> 
 		  </ul>
 		</div>
 	  </div>
@@ -59,8 +59,8 @@
                 <div style="margin-top:2%; margin-left:40px; text-align:justify;">  
                 <h1>Courses</h1>
                 <div style="margin-top:2%; margin-left:40px; text-align:justify;">  
-		<p><a href="wirelessnetworks.html">WSN</a>(KSA) Applications <i>(Updated 12.10.2023)</i></p>
-		<p><a href="#">System Programming</a> Applications</p>
+		<p><a href="wirelessnetworks.html">WSN</a>(KSA) Applications <i>(Updated 22.10.2023)</i></p>
+		<p><a href="systemprogramming.html">System Programming</a> Applications  <i>(Updated 22.10.2023)</i></p>
 		<p><a href="#">Operating Systems</a> Applications</p>
             </div>
             
