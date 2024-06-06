@@ -134,10 +134,6 @@
 <pre><code class="has-line-data" data-line-start="50" data-line-end="67" class="language-c">#include &lt;stdio.h&gt;
 
 void modifyFirstElement(int (*arrPtr)[5]) {
-    (*arrPtr)[0] = 100
-}
-
-void modifyFirstElement(int (*arrPtr)[5]) {
     (*arrPtr)[0] = 100; // Dizinin ilk elemanını değiştiriyoruz
 }
 
