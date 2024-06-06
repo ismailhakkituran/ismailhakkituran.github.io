@@ -89,4 +89,117 @@
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </code></pre>
+
+    <h1 class="code-line" data-line-start="0" data-line-end="1"><a id="Uygulama_7_Haziran_2024_0"></a>Uygulama 7 Haziran 2024</h1>
+
+    <p class="has-line-data" data-line-start="1" data-line-end="2">Aşağıda verilen örneği çalıştıralım.</p>
+<pre><code class="has-line-data" data-line-start="3" data-line-end="22" class="language-c"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">increment</span><span class="hljs-params">(<span class="hljs-keyword">int</span> number)</span> </span>{
+    <span class="hljs-keyword">return</span> number++;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">increment_the_number_in_address</span><span class="hljs-params">(<span class="hljs-keyword">int</span> &amp;number)</span> </span>{
+    number++;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> mynumber = <span class="hljs-number">9</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"increment:%d - mynumber:%d \n"</span>,  increment(mynumber), mynumber );
+    
+    increment_the_number_in_address(&amp;mynumber),
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"mynumber:%d  \n"</span>,  mynumber );
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p class="has-line-data" data-line-start="23" data-line-end="24"><code>increment_the_number_in_address</code> ve <code>increment</code> fonksiyonları çağrıldığında bellekten ne kadar yer isterler tartışınız.</p>
+<h2 class="code-line" data-line-start="25" data-line-end="26"><a id="rnek_2_Diziyi_Fonksiyona_Parametre_Olarak_Gnderme_25"></a>Örnek 2: Diziyi Fonksiyona Parametre Olarak Gönderme</h2>
+<p class="has-line-data" data-line-start="26" data-line-end="27">Dizinin adresini bir fonksiyona direkt olarak göndererek, parametre gönderimi yapmış oluyoruz. Burada <code>printArray</code> fonksiyonu <code>numbers</code> dizisinden kendine local bir kopya oluşturur mu?</p>
+<pre><code class="has-line-data" data-line-start="29" data-line-end="44" class="language-c"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printArray</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *arr, <span class="hljs-keyword">int</span> size)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d "</span>, arr[i]);
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> numbers[] = {<span class="hljs-number">5</span>, <span class="hljs-number">10</span>, <span class="hljs-number">15</span>, <span class="hljs-number">20</span>, <span class="hljs-number">25</span>};
+    printArray(numbers, <span class="hljs-number">5</span>); <span class="hljs-comment">// Dizi adı, dizinin başlangıç adresini gönderir.</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p class="has-line-data" data-line-start="45" data-line-end="46"><code>printArray</code> fonksiyonuna neden dizinin uzunluğunu vermek zorunda kaldık? Yoksa gerçekten dizinin kendisi parametre olarak geçilmedi mi?</p>
+<h2 class="code-line" data-line-start="47" data-line-end="48"><a id="rnek_3_ile_pekitirme_47"></a>Örnek 3 ile pekiştirme</h2>
+<pre><code class="has-line-data" data-line-start="50" data-line-end="67" class="language-c">#include &lt;stdio.h&gt;
+
+void modifyFirstElement(int (*arrPtr)[5]) {
+    (*arrPtr)[0] = 100
+}
+
+void modifyFirstElement(int (*arrPtr)[5]) {
+    (*arrPtr)[0] = 100; // Dizinin ilk elemanını değiştiriyoruz
+}
+
+int main() {
+    int numbers[] = {1, 2, 3, 4, 5};
+    modifyFirstElement(&amp;numbers);
+    printf("First element: %d\n", numbers[0]);
+    return 0;
+}
+</code></pre>
+<h1 class="code-line" data-line-start="68" data-line-end="69"><a id="Fonksiyon_aretileri_Function_Pointers_68"></a>Fonksiyon İşaretçileri (Function Pointers)</h1>
+<h2 class="code-line" data-line-start="69" data-line-end="70"><a id="rnek_1_Basit_bir_Fonksiyon_aretisi_69"></a>Örnek 1: Basit bir Fonksiyon İşaretçisi</h2>
+<p class="has-line-data" data-line-start="71" data-line-end="72"><code>funcPtr()</code> isimli metot 2 defa çağrılıyor. Nasıl 2 farklı sonuç basabiliyor ?</p>
+<pre><code class="has-line-data" data-line-start="73" data-line-end="91" class="language-c"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">helloWorld</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Hello, World!\n"</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">byebyeWorld</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Bye bye, World!\n"</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">void</span> (*funcPtr)() = helloWorld; <span class="hljs-comment">// Fonksiyon pointer'ı</span>
+    funcPtr(); <span class="hljs-comment">// Fonksiyonu çağır</span>
+    <span class="hljs-keyword">void</span> (*funcPtr)() = byebyeWorld; <span class="hljs-comment">// Fonksiyon pointer'ı</span>
+    funcPtr(); <span class="hljs-comment">// Aynı fonksiyonu çağır</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h2 class="code-line" data-line-start="91" data-line-end="92"><a id="rnek_2_Parametre_Alan_Fonksiyon_aretileri_91"></a>Örnek 2: Parametre Alan Fonksiyon İşaretçileri</h2>
+<pre><code class="has-line-data" data-line-start="94" data-line-end="107" class="language-c"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{
+    <span class="hljs-keyword">return</span> a + b;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> (*addPtr)(<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>) = add; <span class="hljs-comment">// Fonksiyon pointer'ı</span>
+    <span class="hljs-keyword">int</span> result = addPtr(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>); <span class="hljs-comment">// Fonksiyonu pointer üzerinden çağır</span>
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Result: %d\n"</span>, result);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h2 class="code-line" data-line-start="107" data-line-end="108"><a id="rnek_3_Fonksiyon_Pointerlar_ve_Callback_Fonksiyonlar_107"></a>Örnek 3: Fonksiyon Pointerları ve Callback Fonksiyonları</h2>
+<p class="has-line-data" data-line-start="108" data-line-end="109">Bir fonksiyon, parametre olarak başka bir fonksiyonu nasıl alabilir? (callback)</p>
+<pre><code class="has-line-data" data-line-start="111" data-line-end="126" class="language-c">#include &lt;stdio.h&gt;
+
+void execute(void (*func)(int), int num) {
+    func(num);
+}
+
+void printNumber(int num) {
+    printf("Number: %d\n", num);
+}
+
+int main() {
+    execute(printNumber, 5); // printNumber fonksiyonunu callback olarak kullanır
+    return 0;
+}
+</code></pre>
+<p class="has-line-data" data-line-start="127" data-line-end="128">C dilinde sistem seviyesinde API tasarımları, sürücü (driver) kütüphaneleri bu teknikle tasarlanmaktadır. Örneğin klavye, mouse, kamera vb. cihaz üreticileri işletim sisteminin <code>execute()</code> metodunda belirtildiği gibi çatı (taslak) fonksiyonu belirtirler. Firmalar bu metotları <code>printNumber</code> örneğindeki gibi gerçeklemekle (implementasyon) yükümlüdürler.</p>
 </body></html>
