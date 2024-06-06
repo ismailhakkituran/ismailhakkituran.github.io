@@ -94,10 +94,11 @@
 <pre><code class="has-line-data" data-line-start="3" data-line-end="22" class="language-c"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
 
 <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">increment</span><span class="hljs-params">(<span class="hljs-keyword">int</span> number)</span> </span>{
-    <span class="hljs-keyword">return</span> number++;
+    number++;
+    <span class="hljs-keyword">return</span> number;
 }
 
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">increment_the_number_in_address</span><span class="hljs-params">(<span class="hljs-keyword">int</span> &amp;number)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">increment_the_number_in_address</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *number)</span> </span>{
     number++;
 }
 
@@ -163,7 +164,7 @@ int main() {
 <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">void</span> (*funcPtr)() = helloWorld; <span class="hljs-comment">// Fonksiyon pointer'ı</span>
     funcPtr(); <span class="hljs-comment">// Fonksiyonu çağır</span>
-    <span class="hljs-keyword">void</span> (*funcPtr)() = byebyeWorld; <span class="hljs-comment">// Fonksiyon pointer'ı</span>
+    funcPtr = byebyeWorld; <span class="hljs-comment">// Fonksiyon pointer'ı başka fonk.a tekrar ata</span>
     funcPtr(); <span class="hljs-comment">// Aynı fonksiyonu çağır</span>
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
