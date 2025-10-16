@@ -1,23 +1,17 @@
-# 🗓️ Hafta 1: Linux Sistemi Tanıma ve Shell’e Giriş
+Linux Sistemi Tanıma ve Shell’e Giriş
+=======================================
+
 **Tema:** “Linux dünyasında bir programın doğduğu yer: Shell”
 
-## 🎯 Amaçlar
-- Öğrencinin Linux/Unix ekosistemine zihinsel olarak adapte olması  
-- Dosya sistemi hiyerarşisini anlaması  
-- Shell’in sistemle nasıl konuştuğunu kavraması  
-- Basit komut zincirleriyle giriş/çıkış yönlendirme mantığını kavraması  
 
----
-
-## 📘 1. Giriş: Neden Linux?
+##  1. Giriş: Neden Linux?
 - “Sistem Programlama” neden Linux üzerinde anlatılır?  
 - Kernel vs User-space  
 - Shell’in rolü (örnek: `ls` yazınca kernel seviyesinde neler olur)  
 - CLI ile GUI farkı (script edilebilirlik, deterministik davranış, otomasyon)
 
----
 
-## 📂 2. Linux Dosya Sistemi Hiyerarşisi
+## 2. Linux Dosya Sistemi Hiyerarşisi
 Bir sistemcinin ezbere bilmesi gereken dizinlerin özeti:
 
 | Dizin | Açıklama |
@@ -34,13 +28,15 @@ Bir sistemcinin ezbere bilmesi gereken dizinlerin özeti:
 | `/var` | Loglar, spool dosyaları |
 | `/home` | Kullanıcıların ev dizinleri |
 
-🧠 *Mini tartışma:*  
+
+---
+---
 > “Bir komutun sistemin neresinden çalıştığını anlamak için hangi yolları izleriz?”  
-Cevap: `$PATH` değişkeni, `which`, `whereis`
+ `$PATH` değişkeni, `which`, `whereis`
 
 ---
 
-## 💻 3. Shell ile Temel Etkileşim
+##  3. Shell ile Temel Etkileşim
 
 ### 3.1 Shell türleri
 - `sh`, `bash`, `zsh`, `dash` farkı  
@@ -63,14 +59,14 @@ Cevap: `$PATH` değişkeni, `which`, `whereis`
 - `2>` : stderr yönlendirme  
 - `tee` : hem dosyaya hem ekrana yazma  
 
-💡 *Gösteri:*  
+ *Gösteri:*  
 ```bash
 ls /bin | grep sh | tee shell_list.txt
 ```
 
 ---
 
-## 🧩 4. Ortam Değişkenleri ve PATH
+##  4. Ortam Değişkenleri ve PATH
 ```bash
 echo $PATH
 export MYNAME="Ismail"
@@ -82,14 +78,14 @@ echo "Benim adım $MYNAME"
 
 ---
 
-## ⚙️ 5. Sistem Süreçlerine Kısa Bakış
+##  5. Sistem Süreçlerine Kısa Bakış
 - `ps aux`, `top`, `htop`  
 - `kill`, `killall`, `sleep`, `jobs`, `fg`, `bg`  
 - Arka plan kavramı: `&`  
 
 ---
 
-## 🧠 6. Bash Script Temelleri
+## 6. Bash Script Temelleri
 ```bash
 #!/bin/bash
 echo "Merhaba $(whoami), bugün $(date)"
@@ -100,8 +96,8 @@ echo "Merhaba $(whoami), bugün $(date)"
 
 ---
 
-## 🧪 Hafta 1 Mini-Lab: “Ben Kimim?” Scripti
-**Amaç:** Öğrencinin ortam değişkenleri, yönlendirmeler ve basit script yazımını öğrenmesi  
+##  Hafta 1 : “Ben Kimim?” Scripti
+
 
 **Görev:**  
 `whoami.sh` isminde bir bash script yaz:  
@@ -120,13 +116,56 @@ Sistem: up 2 hours, 15 minutes
 
 ---
 
-## 📚 Ek Okuma / Kaynak
+#### Shebang
+#! ile başlayan bu satır, script’in hangi yorumlayıcı (interpreter) tarafından çalıştırılacağını işletim sistemine bildirir.
+
+```sh
+#!/usr/bin/bash
+#!/bin/bash
+```
+
+Yani aslında şu komutu çalıştırmış olur:
+
+```sh
+/usr/bin/bash script.sh
+```
+
+
+Python veya Perl script’lerinde de kullanılır
+```sh
+#!/usr/bin/python3
+print("Merhaba Dünya")
+```
+
+veya
+```sh
+#!/usr/bin/perl
+print "Hello, World!\n";
+```
+
+
+Linux çekirdeğinde bu davranış fs/binfmt_script.c içinde tanımlıdır.
+
+Kernel dosyanın başındaki `#!` sekansını görünce,
+
+Belirtilen yorumlayıcıyı (/bin/bash) çağırır,
+
+Script dosyasının yolunu argv[1] olarak verir.
+
+Yani:
+```sh
+argv[0] = "/bin/bash"
+argv[1] = "./script.sh"
+```
+
+
+##  Kaynak
 - **“The Linux Command Line”** – William Shotts (1–4. Bölümler)  
 - `man hier` → Linux dizin yapısı açıklaması  
 - `tldr` → Modern komut örnekleri (öner: `sudo apt install tldr`)  
 
 ---
 
-## 🎓 Sonraki Hafta İçin Hazırlık
+##  Sonraki Haftalarda...
 > System çağrıları (fork, exec, wait) temellerine giriş —  
 > "Bir shell nasıl yeni bir process başlatır?"
