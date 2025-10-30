@@ -1,4 +1,4 @@
-31/10/2025 Programlamaya Giriş Uygulamalası
+31/10/2025 Programlamaya Giriş Uygulaması
 ===========================================
 
 # Terminale Giriş
