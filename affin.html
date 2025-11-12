@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2D Afin Dönüşümler – Etkileşimli Polygon Aracı</title>
+  <style>
+    :root{
+      --bg:#0e1116; --panel:#151a22; --ink:#e8eefc; --muted:#9fb3d2; --accent:#6aa6ff; --grid:#2a3342; --edge:#7cc;
+      --ok:#3ecf8e; --warn:#f0ad4e; --danger:#ff6b6b;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial; background:var(--bg); color:var(--ink);}
+    header{display:flex; align-items:center; gap:.8rem; padding:1rem 1.25rem; border-bottom:1px solid #222836; background:linear-gradient(180deg,#0f1320,#0b0f18)}
+    header h1{font-size:1.15rem; margin:0; font-weight:650}
+    header .tag{font-size:.78rem; padding:.2rem .5rem; background:#1b2230; color:var(--muted); border-radius:.5rem; border:1px solid #242c3d}
+
+    .wrap{display:grid; grid-template-columns: 360px 1fr 340px; gap:12px; padding:12px}
+    .panel{background:var(--panel); border:1px solid #232b3b; border-radius:16px; padding:12px;}
+    .panel h2{margin:.25rem 0 .6rem; font-size:1rem}
+    .panel h3{margin:.9rem 0 .35rem; font-size:.95rem; color:var(--muted)}
+    .panel .row{display:grid; grid-template-columns: 1fr 1fr; gap:8px}
+    .panel label{font-size:.82rem; color:var(--muted)}
+    .panel input, .panel select, .panel textarea{width:100%; background:#0f1420; color:var(--ink); border:1px solid #243049; border-radius:10px; padding:.55rem .6rem; font-size:.9rem}
+    .panel input[type="number"]{text-align:right}
+    .panel button{appearance:none; background:#172235; color:#dbe6ff; border:1px solid #273652; border-radius:12px; padding:.6rem .8rem; font-weight:600; cursor:pointer}
+    .panel button:hover{filter:brightness(1.05)}
+    .panel .btn-row{display:flex; flex-wrap:wrap; gap:8px}
+
+    .canvas-wrap{position:relative;}
+    .toolbar{display:flex; gap:8px; align-items:center; margin-bottom:8px}
+    .toolbar button{background:#162338}
+    .legend{font-size:.8rem; color:var(--muted)}
+
+    svg{width:100%; height:72vh; background:#0a0f18; border:1px solid #1b2230; border-radius:14px}
+    .grid line{stroke:var(--grid); stroke-width:1}
+    .axis{stroke:#3c4f72; stroke-width:1.2}
+    .poly{fill:rgba(106,166,255,.12); stroke:var(--accent); stroke-width:2}
+    .poly.shadow{fill:rgba(62,207,142,.08); stroke:var(--ok); stroke-dasharray:5 4}
+    .handle{fill:#0f1420; stroke:#7cc; stroke-width:1.5; cursor:move}
+
+    .table{max-height:32vh; overflow:auto; border:1px solid #223; border-radius:12px}
+    table{width:100%; border-collapse:collapse; font-size:.9rem}
+    th,td{padding:.4rem .6rem; border-bottom:1px solid #1f2939}
+    th{position:sticky; top:0; background:#111828; z-index:1}
+
+    details{border:1px solid #232b3b; border-radius:12px; padding:.6rem .8rem; background:#0e1421}
+    details summary{cursor:pointer; font-weight:600; color:#cfe0ff}
+    .note{font-size:.84rem; color:#b1c5e6}
+    .chip{display:inline-block; padding:.1rem .5rem; border:1px solid #2a3b59; border-radius:999px; font-size:.78rem; color:#b4c6ea}
+
+    @media (max-width:1200px){.wrap{grid-template-columns:1fr}} 
+  </style>
+</head>
+<body>
+  <header>
+    <h1>2D Afin Dönüşümler – Etkileşimli Polygon Aracı</h1>
+    <span class="tag">HTML + JavaScript • Tek dosya • GitHub Pages uyumlu</span>
+  </header>
+
+  <div class="wrap">
+    <!-- SOL KONTROLLER -->
+    <section class="panel" id="controls">
+      <h2>Dönüşüm Kontrolleri</h2>
+
+      <div class="row">
+        <div>
+          <h3>Öteleme (T)</h3>
+          <label>dx</label>
+          <input id="tx" type="number" step="1" value="0"/>
+        </div>
+        <div style="align-self:end">
+          <label>dy</label>
+          <input id="ty" type="number" step="1" value="0"/>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <h3>Ölçekleme (S)</h3>
+          <label>sx</label>
+          <input id="sx" type="number" step="0.1" value="1"/>
+        </div>
+        <div style="align-self:end">
+          <label>sy</label>
+          <input id="sy" type="number" step="0.1" value="1"/>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <h3>Döndürme (R)</h3>
+          <label>Açı (°)</label>
+          <input id="angle" type="number" step="1" value="0"/>
+        </div>
+        <div style="align-self:end">
+          <label>Merkez</label>
+          <select id="pivot">
+            <option value="origin">Orijin (0,0)</option>
+            <option value="centroid" selected>Geometrik Merkez</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <h3>Kaydırma (Shear)</h3>
+          <label>shx</label>
+          <input id="shx" type="number" step="0.1" value="0"/>
+        </div>
+        <div style="align-self:end">
+          <label>shy</label>
+          <input id="shy" type="number" step="0.1" value="0"/>
+        </div>
+      </div>
+
+      <h3 y>Yansıma (Reflection)</h3>
+      <div class="btn-row" style="margin-bottom:.4rem">
+        <button data-reflect="x">x-ekseni</button>
+        <button data-reflect="y">y-ekseni</button>
+        <button data-reflect="y=x">y = x</button>
+        <button data-reflect="origin">orijin</button>
+      </div>
+
+      <h3>Uygulama</h3>
+      <div class="btn-row">
+        <button id="apply">Dönüşümü Uygula</button>
+        <button id="resetInputs">Girdileri Sıfırla</button>
+        <button id="undo">Geri Al</button>
+        <button id="redo">İleri Al</button>
+      </div>
+
+      <h3>Matris (3×3, Homojen)</h3>
+      <div class="row">
+        <div>
+          <label>Matrisin Uygulanma Şekli</label>
+          <select id="mode">
+            <option value="compose">Bileşik (cumulative)</option>
+            <option value="instant" selected>Anlık uygula</option>
+          </select>
+        </div>
+        <div style="align-self:end">
+          <button id="resetMatrix">Kümülatif Matrisi Sıfırla</button>
+        </div>
+      </div>
+
+      <div class="row" style="grid-template-columns:repeat(3,1fr); gap:6px; margin-top:6px">
+        <input class="m" id="m00" type="number" step="0.01" value="1">
+        <input class="m" id="m01" type="number" step="0.01" value="0">
+        <input class="m" id="m02" type="number" step="0.01" value="0">
+        <input class="m" id="m10" type="number" step="0.01" value="0">
+        <input class="m" id="m11" type="number" step="0.01" value="1">
+        <input class="m" id="m12" type="number" step="0.01" value="0">
+        <input class="m" id="m20" type="number" step="0.01" value="0">
+        <input class="m" id="m21" type="number" step="0.01" value="0">
+        <input class="m" id="m22" type="number" step="0.01" value="1">
+      </div>
+      <div class="btn-row" style="margin-top:6px">
+        <button id="applyMatrix">Özel Matrisi Uygula</button>
+      </div>
+
+      <h3>İçe/Dışa Aktarım</h3>
+      <div class="btn-row">
+        <button id="exportJSON">Poligon’u JSON olarak indir</button>
+        <button id="copyJSON">JSON’u kopyala</button>
+      </div>
+      <label class="note">JSON yüklemek için: veriyi aşağıya yapıştırın ve “Yükle”ye tıklayın.</label>
+      <textarea id="jsonIn" rows="3" placeholder='[{"x":0,"y":0},{"x":50,"y":0},...]'></textarea>
+      <div class="btn-row">
+        <button id="importJSON">Yükle</button>
+        <button id="resetPoly" style="border-color:#3b2a2a; color:#ffbdbd">Poligon’u Sıfırla</button>
+      </div>
+    </section>
+
+    <!-- ORTA – ÇİZİM ALANI -->
+    <section class="panel canvas-wrap">
+      <div class="toolbar">
+        <button id="fitView">Görünümü Sığdır</button>
+        <button id="toggleShadow">Önceki poligonu göster/gizle</button>
+        <span class="legend">Noktalar sürüklenebilir • Izgara her 20 px • Orijin mavi eksenlerle
+        </span>
+      </div>
+      <svg id="stage" viewBox="-300 -240 600 480" tabindex="0" aria-label="2D sahne">
+        <g class="grid" id="grid"></g>
+        <g class="axes" id="axes"></g>
+        <polygon id="polyShadow" class="poly shadow" points="" visibility="hidden"></polygon>
+        <polygon id="poly" class="poly" points=""></polygon>
+        <g id="handles"></g>
+      </svg>
+    </section>
+
+    <!-- SAĞ – KOORDİNATLAR & TEORİ -->
+    <section class="panel">
+      <h2>Koordinatlar</h2>
+      <div class="table">
+        <table id="coordTable">
+          <thead><tr><th>#</th><th>x</th><th>y</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <h2 style="margin-top:1rem">Kümülatif Matris</h2>
+      <code id="cumMat" style="display:block; background:#0b0f18; padding:.6rem .7rem; border-radius:10px; border:1px solid #242e43; font-size:.85rem"></code>
+
+      <h2 style="margin-top:1rem">3B Afin Dönüşümler (Özet)</h2>
+      <details>
+        <summary>Kuramı göster (homojen koordinatlar ve matrisler)</summary>
+        <div class="note">
+          <p><strong>Afin dönüşüm</strong>, doğruları ve paralelliği koruyan; öteleme, ölçekleme, döndürme, kaydırma (shear) ve yansımayı kapsayan lineer olmayan ama lineerleştirilebilir bir sınıftır. 2B için 3×3, 3B için 4×4 <em>homojen koordinat</em> matrisleriyle tek çatı altında temsil edilir.</p>
+          <p>3B’de bir nokta <code>p = (x,y,z,1)^T</code> olarak yazılır ve <code>p' = M · p</code> ile dönüştürülür. Tipik matris blok yapısı:
+          <br/><code>M = [ R  t ; 0  1 ]</code>, burada <code>R ∈ ℝ^{3×3}</code> lineer kısım (döndürme+ölçek+shear), <code>t ∈ ℝ^{3}</code> ötelemedir.</p>
+          <ul>
+            <li><b>Öteleme</b>: <code>T(tx,ty,tz) = [[I, t],[0,1]]</code></li>
+            <li><b>Döndürme</b> (ör. z etrafında): <code>Rz(θ) = [[cosθ -sinθ 0],[sinθ cosθ 0],[0 0 1]]</code></li>
+            <li><b>Ölçekleme</b>: <code>S(sx,sy,sz) = diag(sx,sy,sz,1)</code></li>
+            <li><b>Kaydırma</b>: uygun off-diagonal öğelerin ayarlanmasıyla yapılır (ör. <code>x ← x + k·y</code> için <code>m01=k</code>).</li>
+            <li><b>Yansıma</b>: bir eksen/düzleme göre işaret çevirmeleri (ör. <code>diag(-1,1,1,1)</code>).</li>
+          </ul>
+          <p><strong>Bileşim</strong> sırası önemlidir: <code>p' = M2 · (M1 · p)</code> ile aynı değildir <code>p' = (M2·M1) · p</code>. GUI’deki “Bileşik” modu, her yeni dönüşümü mevcut kümülatif matrisle çarpar.</p>
+        </div>
+      </details>
+      <p class="note" style="margin-top:.6rem">Bu sayfa 2B etkileşim sunar; kuramsal bölüm 3B afin dönüşümleri kavramsal olarak özetler (raporunuza ekleyebilirsiniz).</p>
+      <div style="margin-top:.6rem">
+        <span class="chip">Sürükle-bırak noktalar</span>
+        <span class="chip">JSON dışa/içe aktarım</span>
+        <span class="chip">Undo/Redo</span>
+        <span class="chip">Özel 3×3 matris</span>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // ===== Yardımcı Matematik =====
+    const deg2rad = d => d * Math.PI / 180;
+    const matMul = (A,B) => { // 3x3 * 3x3
+      const C=[[0,0,0],[0,0,0],[0,0,0]];
+      for(let i=0;i<3;i++) for(let j=0;j<3;j++) C[i][j]=A[i][0]*B[0][j]+A[i][1]*B[1][j]+A[i][2]*B[2][j];
+      return C;
+    };
+    const matPoint = (M,{x,y}) => ({
+      x: M[0][0]*x + M[0][1]*y + M[0][2]*1,
+      y: M[1][0]*x + M[1][1]*y + M[1][2]*1
+    });
+    const applyMatToPoints = (M,pts) => pts.map(p=>matPoint(M,p));
+    const identity = ()=>[[1,0,0],[0,1,0],[0,0,1]];
+
+    // Temel matrisler
+    const T = (dx,dy)=>[[1,0,dx],[0,1,dy],[0,0,1]];
+    const S = (sx,sy)=>[[sx,0,0],[0,sy,0],[0,0,1]];
+    const R = (a)=>{const c=Math.cos(a), s=Math.sin(a); return [[c,-s,0],[s,c,0],[0,0,1]]};
+    const Sh = (shx,shy)=>[[1,shx,0],[shy,1,0],[0,0,1]];
+    const Ref = type => ({
+      'x': [[1,0,0],[0,-1,0],[0,0,1]],
+      'y': [[-1,0,0],[0,1,0],[0,0,1]],
+      'y=x': [[0,1,0],[1,0,0],[0,0,1]],
+      'origin': [[-1,0,0],[0,-1,0],[0,0,1]]
+    })[type];
+
+    // ===== Sahne & Durum =====
+    const svg = document.getElementById('stage');
+    const polyEl = document.getElementById('poly');
+    const shadowEl = document.getElementById('polyShadow');
+    const handlesEl = document.getElementById('handles');
+
+    let polygon = [ // hoş bir beşgen
+      {x:-80,y:-40},{x:0,y:-90},{x:80,y:-40},{x:50,y:60},{x:-50,y:60}
+    ];
+    let shadow = null;
+    let cumMatrix = identity();
+    const history = [];
+    const future = [];
+
+    function pushHistory(){ history.push(JSON.stringify(polygon)); if(history.length>100) history.shift(); future.length=0; }
+    function undo(){ if(history.length){ future.push(JSON.stringify(polygon)); polygon = JSON.parse(history.pop()); render(); } }
+    function redo(){ if(future.length){ history.push(JSON.stringify(polygon)); polygon = JSON.parse(future.pop()); render(); } }
+
+    // Izgara & eksenler
+    function drawGrid(){
+      const g = document.getElementById('grid');
+      const a = document.getElementById('axes');
+      g.innerHTML=''; a.innerHTML='';
+      for(let x=-300;x<=300;x+=20){ const l = line(x,-240,x,240); l.setAttribute('stroke-opacity', x===0?0.0:1); g.appendChild(l); }
+      for(let y=-240;y<=240;y+=20){ const l = line(-300,y,300,y); l.setAttribute('stroke-opacity', y===0?0.0:1); g.appendChild(l); }
+      // axes
+      const xax=line(-300,0,300,0); xax.setAttribute('class','axis'); a.appendChild(xax);
+      const yax=line(0,-240,0,240); yax.setAttribute('class','axis'); a.appendChild(yax);
+    }
+    function line(x1,y1,x2,y2){ const l=document.createElementNS('http://www.w3.org/2000/svg','line'); l.setAttribute('x1',x1); l.setAttribute('y1',y1); l.setAttribute('x2',x2); l.setAttribute('y2',y2); return l; }
+
+    // Render
+    function ptsToAttr(pts){ return pts.map(p=>`${p.x},${p.y}`).join(' '); }
+    function render(){
+      polyEl.setAttribute('points', ptsToAttr(polygon));
+      if(shadow){ shadowEl.setAttribute('points', ptsToAttr(shadow)); shadowEl.setAttribute('visibility','visible'); }
+      drawHandles();
+      updateTable();
+      updateCumMatrixCode();
+    }
+
+    // Handle noktaları
+    function drawHandles(){
+      handlesEl.innerHTML='';
+      polygon.forEach((p,i)=>{
+        const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+        c.setAttribute('cx',p.x); c.setAttribute('cy',p.y); c.setAttribute('r',5.5); c.setAttribute('class','handle');
+        c.addEventListener('mousedown', startDrag(i));
+        handlesEl.appendChild(c);
+      });
+    }
+    let dragging=null;
+    function startDrag(idx){
+      return (e)=>{
+        e.preventDefault(); dragging={idx, start:getSVGPoint(e)};
+        window.addEventListener('mousemove', onDrag);
+        window.addEventListener('mouseup', endDrag);
+      };
+    }
+    function getSVGPoint(evt){
+      const pt = svg.createSVGPoint(); pt.x = evt.clientX; pt.y = evt.clientY; const ctm = svg.getScreenCTM().inverse(); return pt.matrixTransform(ctm);
+    }
+    function onDrag(e){ if(!dragging) return; const p=getSVGPoint(e); const i=dragging.idx; polygon[i]={x:p.x, y:p.y}; render(); }
+    function endDrag(){ dragging=null; pushHistory(); }
+
+    // Koordinat tablosu
+    function updateTable(){
+      const tb=document.querySelector('#coordTable tbody'); tb.innerHTML='';
+      polygon.forEach((p,i)=>{
+        const tr=document.createElement('tr');
+        tr.innerHTML=`<td>${i}</td><td>${p.x.toFixed(2)}</td><td>${p.y.toFixed(2)}</td>`; tb.appendChild(tr);
+      });
+    }
+
+    // Geometri yardımcıları
+    function centroid(pts){
+      // çokgen merkez (poligon düzgün değilse de geometrik ortalama kullanılabilir); burada alan ağırlıklı sürüm
+      let A=0, Cx=0, Cy=0; const n=pts.length; for(let i=0;i<n;i++){
+        const p=pts[i], q=pts[(i+1)%n]; const cross=p.x*q.y - q.x*p.y; A+=cross; Cx+=(p.x+q.x)*cross; Cy+=(p.y+q.y)*cross;
+      }
+      A*=0.5; if(Math.abs(A)<1e-6){ // alan çok küçükse aritmetik ortalama kullan
+        const sx=pts.reduce((s,p)=>s+p.x,0), sy=pts.reduce((s,p)=>s+p.y,0); return {x:sx/n, y:sy/n};
+      }
+      return {x: Cx/(6*A), y: Cy/(6*A)};
+    }
+
+    // Dönüşümleri uygulama
+    function currentInputsMatrix(){
+      const dx=parseFloat(document.getElementById('tx').value)||0;
+      const dy=parseFloat(document.getElementById('ty').value)||0;
+      const sx=parseFloat(document.getElementById('sx').value)||1;
+      const sy=parseFloat(document.getElementById('sy').value)||1;
+      const ang=deg2rad(parseFloat(document.getElementById('angle').value)||0);
+      const shx=parseFloat(document.getElementById('shx').value)||0;
+      const shy=parseFloat(document.getElementById('shy').value)||0;
+      const piv=document.getElementById('pivot').value;
+
+      let M = identity();
+      // S, Sh, R, T sırası: kullanıcı girdilerini tek bir matris içinde birleştirelim
+      // Pivot/merkez çevresinde uygulamak için ön/son öteleme yapıyoruz.
+      const P = (piv==='centroid'? centroid(polygon) : {x:0,y:0});
+      const toOrigin = T(-P.x,-P.y), fromOrigin = T(P.x,P.y);
+
+      const Ms = S(sx,sy);
+      const Mh = Sh(shx,shy);
+      const Mr = R(ang);
+      const Mt = T(dx,dy);
+
+      M = matMul(Mt, matMul(fromOrigin, matMul(Mr, matMul(Mh, matMul(Ms, toOrigin)))));
+      return M;
+    }
+
+    function applyMatrix(M){
+      shadow = polygon.map(p=>({...p}));
+      polygon = applyMatToPoints(M, polygon);
+      if(document.getElementById('mode').value==='compose'){
+        cumMatrix = matMul(M, cumMatrix);
+      }
+      pushHistory();
+      render();
+    }
+
+    function updateCumMatrixCode(){
+      const m=cumMatrix.map(r=>r.map(v=> (Math.abs(v)<1e-12?0:v)).map(v=>v.toFixed(4).padStart(8)).join(' ')).join('\n');
+      document.getElementById('cumMat').textContent = m || '';
+    }
+
+    // Olay bağlama
+    document.getElementById('apply').addEventListener('click', ()=> applyMatrix(currentInputsMatrix()));
+    document.getElementById('resetInputs').addEventListener('click', ()=>{
+      ['tx','ty'].forEach(id=>document.getElementById(id).value=0);
+      ['sx','sy'].forEach(id=>document.getElementById(id).value=1);
+      document.getElementById('angle').value=0;
+      ['shx','shy'].forEach(id=>document.getElementById(id).value=0);
+    });
+    document.getElementById('undo').addEventListener('click', undo);
+    document.getElementById('redo').addEventListener('click', redo);
+
+    document.querySelectorAll('[data-reflect]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const type=btn.getAttribute('data-reflect');
+        const piv=document.getElementById('pivot').value;
+        const P = (piv==='centroid'? centroid(polygon) : {x:0,y:0});
+        const M = matMul(T(P.x,P.y), matMul(Ref(type), T(-P.x,-P.y)));
+        applyMatrix(M);
+      });
+    });
+
+    document.getElementById('applyMatrix').addEventListener('click',()=>{
+      const ids=['m00','m01','m02','m10','m11','m12','m20','m21','m22'];
+      const vals=ids.map(id=>parseFloat(document.getElementById(id).value)||0);
+      const M=[[vals[0],vals[1],vals[2]],[vals[3],vals[4],vals[5]],[vals[6],vals[7],vals[8]]];
+      applyMatrix(M);
+    });
+    document.getElementById('resetMatrix').addEventListener('click',()=>{ cumMatrix=identity(); updateCumMatrixCode(); });
+
+    // İçe/dışa aktarım
+    document.getElementById('exportJSON').addEventListener('click',()=>{
+      const data = JSON.stringify(polygon, null, 2);
+      const blob = new Blob([data], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download='polygon.json'; a.click(); URL.revokeObjectURL(url);
+    });
+    document.getElementById('copyJSON').addEventListener('click',()=>{
+      navigator.clipboard.writeText(JSON.stringify(polygon)).then(()=>{
+        flash('JSON kopyalandı.');
+      });
+    });
+    document.getElementById('importJSON').addEventListener('click',()=>{
+      try{
+        const arr = JSON.parse(document.getElementById('jsonIn').value);
+        if(Array.isArray(arr) && arr.every(o=>typeof o.x==='number'&&typeof o.y==='number')){
+          polygon = arr.map(o=>({x:o.x,y:o.y}));
+          shadow=null; pushHistory(); render();
+        } else throw new Error('Geçersiz biçim');
+      }catch(err){ alert('JSON okunamadı: '+err.message); }
+    });
+    document.getElementById('resetPoly').addEventListener('click',()=>{
+      if(confirm('Poligon’u başlangıca döndür?')){
+        polygon=[{x:-80,y:-40},{x:0,y:-90},{x:80,y:-40},{x:50,y:60},{x:-50,y:60}];
+        shadow=null; cumMatrix=identity(); render();
+      }
+    });
+
+    // Görünüm araçları
+    document.getElementById('fitView').addEventListener('click',()=>{
+      const xs=polygon.map(p=>p.x), ys=polygon.map(p=>p.y);
+      const minX=Math.min(...xs), maxX=Math.max(...xs), minY=Math.min(...ys), maxY=Math.max(...ys);
+      const pad=40; const w=(maxX-minX)+pad*2, h=(maxY-minY)+pad*2; const cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+      svg.setAttribute('viewBox', `${Math.round(cx-w/2)} ${Math.round(cy-h/2)} ${Math.round(w)} ${Math.round(h)}`);
+    });
+    document.getElementById('toggleShadow').addEventListener('click',()=>{
+      const vis=shadowEl.getAttribute('visibility'); shadowEl.setAttribute('visibility', vis==='hidden'?'visible':'hidden');
+    });
+
+    function flash(msg){
+      const el=document.createElement('div');
+      el.textContent=msg; el.style.position='fixed'; el.style.bottom='16px'; el.style.right='16px'; el.style.padding='10px 12px'; el.style.background='#121a28'; el.style.border='1px solid #2a3a5a'; el.style.borderRadius='10px'; el.style.zIndex=99; document.body.appendChild(el);
+      setTimeout(()=>document.body.removeChild(el),1600);
+    }
+
+    // Başlat
+    drawGrid(); pushHistory(); render();
+  </script>
+</body>
+</html>
