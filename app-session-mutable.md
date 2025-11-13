@@ -24,6 +24,7 @@ Primitive tiplerde değer kopyalanır, değişiklik orijinale etki etmez.
 
 ### String
 
+```java
 String s1 = "Hello";
 String s2 = s1;
 
@@ -31,6 +32,7 @@ s2 = "World";
 
 System.out.println(s1); // "Hello"
 System.out.println(s2); // "World"
+```
 
 ## MUTABLE Veri Tipleri (değiştirilebilir – referans davranışı)
 
@@ -85,6 +87,7 @@ text.toUpperCase();
 
 ## MUTABLE List
 
+```java
 List<Integer> numbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
 
 // MUTABLE -> orijinal listeyi değiştirir
@@ -94,12 +97,15 @@ for (int i = 0; i < numbers.size(); i++) {
 
 System.out.println(numbers); 
 // Çıktı: [42, 42, 42, 42, 42]
+```
 
 ## IMMUTABLE List
 
+```java
 List<Integer> immutableList = List.of(1, 2, 3, 4, 5);
 
 // IMMUTABLE -> set() metodu yok, değiştirilemez
 for (int i = 0; i < immutableList.size(); i++) {
-    // immutableList.set(i, 42);   // ❌ Derleme hatası: UnsupportedOperationException
+    // immutableList.set(i, 42);   // Derleme hatası: UnsupportedOperationException
 }
+```
