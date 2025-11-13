@@ -55,13 +55,14 @@ list1 ve list2 aynı nesneyi referans ediyor, biri değişince diğeri de deği�
 
 ## Dizi örneği (array mutabledır)
 
+```java
 int[] arr1 = {1, 2, 3};
 int[] arr2 = arr1;
 
 arr2[0] = 10;
 
 System.out.println(Arrays.toString(arr1)); // [10, 2, 3]
-
+```
 
 Aşağıdaki örnek hem mutable hem immutable farkını tek yerde gösteriyor:
 
