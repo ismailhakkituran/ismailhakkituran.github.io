@@ -1,5 +1,5 @@
-Shell Uygulamaları - 27
-========================
+Shell Uygulamaları - 27.11.2025
+===============================
 
 # Shell’de Değişken Tanımlama
 
@@ -166,7 +166,11 @@ cut -d: -f1 /etc/passwd
 ### `ps + head + awk`
 
 ```bash
-ps -eo pid,%cpu --sort=-%cpu | head -n 4 | awk 'NR>1 {print $1}'
+ps -eo pid,%cpu --sort=-%cpu | head -n 4 | awk '{print $1}'
+
+#veya
+
+ps -eo pid,%cpu --sort=-%cpu | head -n 4 | awk '{print $1}' | tail -n 3
 ```
 
 Açıklama:
@@ -175,6 +179,8 @@ Açıklama:
 * `--sort=-%cpu` → CPU’ya göre büyükten küçüğe sırala
 * `head -n 4` → ilk satır başlık, sonraki 3 satır proses
 * `awk 'NR>1 {print $1}'` → başlığı at, PID sütununu yaz
+
+Ders esnasında `ps` komutu sırasında farklı değerler alınmasının nedeni, `ps` çıktısının yani sistem durumunun anlık olarak değişmesidir. 
 
 ### Örnek çıktı:
 
