@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Optik Sonuç Analiz Aracı</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d1d5db;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --danger: #b91c1c;
+      --ok: #047857;
+      --warn: #92400e;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn:hover { background: var(--accent-hover); }
+    .btn.secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+    .btn.secondary:hover {
+      background: #d1d5db;
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    input[type="file"] {
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: white;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .stat {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fafafa;
+    }
+
+    .stat .label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .stat .value {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 6px;
+    }
+
+    .scroll {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    th {
+      background: #f3f4f6;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .badge.ok { background: #d1fae5; color: var(--ok); }
+    .badge.warn { background: #fef3c7; color: var(--warn); }
+    .badge.danger { background: #fee2e2; color: var(--danger); }
+
+    .hidden { display: none; }
+
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      padding: 14px;
+      border-radius: 12px;
+      overflow: auto;
+      font-size: 13px;
+    }
+
+    .footer-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Optik Sonuç Analiz Aracı</h1>
+      <p class="muted">
+        Bu araç optik okuyucudan gelen <code>.txt</code> dosyasını tarayıcı içinde işler.
+        Grup sayısını ve soru sayısını otomatik algılar. GitHub Pages üzerinde statik olarak çalışır.
+      </p>
+
+      <div class="row">
+        <input id="fileInput" type="file" accept=".txt" />
+        <button id="analyzeBtn" class="btn">Dosyayı Analiz Et</button>
+        <button id="downloadResultsBtn" class="btn secondary" disabled>Sonuç CSV İndir</button>
+        <button id="downloadBadBtn" class="btn secondary" disabled>Problemli Satırları İndir</button>
+        <button id="downloadQuestionStatsBtn" class="btn secondary" disabled>Soru İstatistikleri CSV İndir</button>
+      </div>
+
+      <p class="footer-note">
+        Beklenen biçim: Dosyanın başında <code>1:ABC...</code>, <code>2:BCD...</code> şeklinde cevap anahtarları;
+        devamında <code>ogrenci_no grup+cevaplar</code> satırları.
+      </p>
+
+      <div style="margin-top:12px;">
+        <strong>Yüklenecek Dosya Formatı: (Grup ve soru sayısı otomatik algılanacaktır.)</strong>
+        <pre>
+1:DCABEBDBAE
+2:DCABEBDBAE
+25060425 1DCABEBDBAE 
+25060427 2DCABEBDCAE 
+24061013 2DCABEBDBAE 
+24060827 1ACABEBDBBA 
+...
+...
+        </pre>
+      </div>
+      </p>
+    </div>
+
+    <div id="summaryCard" class="card hidden">
+      <h2>Özet</h2>
+      <div id="stats" class="stats"></div>
+      <div id="groupKeysBox" style="margin-top:16px;"></div>
+    </div>
+
+    <div id="resultsCard" class="card hidden">
+      <h2>Sonuçlar</h2>
+      <div class="scroll">
+        <table id="resultsTable"></table>
+      </div>
+    </div>
+
+    <div id="questionStatsCard" class="card hidden">
+      <h2>Soru Bazlı İstatistikler</h2>
+      <div class="scroll">
+        <table id="questionStatsTable"></table>
+      </div>
+    </div>
+
+    <div id="badCard" class="card hidden">
+      <h2>Problemli Satırlar</h2>
+      <div class="scroll">
+        <table id="badTable"></table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Notlar</h3>
+      <ul>
+        <li>Öğrenci sırası, giriş dosyasındaki sırayla korunur.</li>
+        <li>İç boşluklar boş bırakılan soru olarak değerlendirilir.</li>
+        <li>Cevap anahtarları aynı uzunlukta değilse işlem durdurulur.</li>
+        <li>Tüm işlem tarayıcıda yapılır; veri sunucuya gönderilmez.</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const downloadResultsBtn = document.getElementById('downloadResultsBtn');
+    const downloadBadBtn = document.getElementById('downloadBadBtn');
+    const downloadQuestionStatsBtn = document.getElementById('downloadQuestionStatsBtn');
+
+    const summaryCard = document.getElementById('summaryCard');
+    const resultsCard = document.getElementById('resultsCard');
+    const questionStatsCard = document.getElementById('questionStatsCard');
+    const badCard = document.getElementById('badCard');
+
+    const statsEl = document.getElementById('stats');
+    const groupKeysBox = document.getElementById('groupKeysBox');
+    const resultsTable = document.getElementById('resultsTable');
+    const questionStatsTable = document.getElementById('questionStatsTable');
+    const badTable = document.getElementById('badTable');
+
+    let latestResultsCsv = '';
+    let latestBadCsv = '';
+    let latestQuestionStatsCsv = '';
+
+    function readFileAsText(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsText(file, 'utf-8');
+      });
+    }
+
+    function cleanKey(s) {
+      return s.replace(/\s+/g, '');
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function toCsv(rows) {
+      if (!rows.length) return '';
+      const headers = Object.keys(rows[0]);
+      const escapeCell = (value) => {
+        const s = String(value ?? '');
+        if (s.includes('"') || s.includes(',') || s.includes('\n')) {
+          return '"' + s.replace(/"/g, '""') + '"';
+        }
+        return s;
+      };
+
+      const lines = [headers.map(escapeCell).join(',')];
+      for (const row of rows) {
+        lines.push(headers.map(h => escapeCell(row[h])).join(','));
+      }
+      return lines.join('\n');
+    }
+
+    function downloadText(filename, text) {
+      const blob = new Blob([text], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function compareAnswers(studentAnswers, answerKey) {
+      const blankChars = new Set([' ', '-', '*', 'X']);
+      let correct = 0;
+      let wrong = 0;
+      let blank = 0;
+      const details = [];
+
+      for (let i = 0; i < answerKey.length; i++) {
+        const student = studentAnswers[i] ?? ' ';
+        const key = answerKey[i];
+        let status = '';
+
+        if (blankChars.has(student)) {
+          blank++;
+          status = 'BOS';
+        } else if (student === key) {
+          correct++;
+          status = 'DOGRU';
+        } else {
+          wrong++;
+          status = 'YANLIS';
+        }
+
+        details.push({
+          question_no: i + 1,
+          student_answer: student,
+          correct_answer: key,
+          status
+        });
+      }
+
+      return { correct, wrong, blank, details };
+    }
+
+    function parseAnswerKeys(lines) {
+      const answerKeys = {};
+      let dataStartIndex = 0;
+
+      for (let i = 0; i < lines.length; i++) {
+        const raw = lines[i].trim();
+        if (!raw) continue;
+
+        const match = raw.match(/^(\d+)\s*:\s*([A-Z ]+)$/);
+        if (match) {
+          const group = match[1];
+          const key = cleanKey(match[2]);
+          answerKeys[group] = key;
+          dataStartIndex = i + 1;
+        } else {
+          break;
+        }
+      }
+
+      const groups = Object.keys(answerKeys);
+      if (!groups.length) {
+        throw new Error("Cevap anahtarları bulunamadı. Başta '1:ABCDE' gibi satırlar olmalı.");
+      }
+
+      const lengths = [...new Set(Object.values(answerKeys).map(v => v.length))];
+      if (lengths.length !== 1) {
+        throw new Error('Tüm grup cevap anahtarları aynı uzunlukta olmalı.');
+      }
+
+      return {
+        answerKeys,
+        dataStartIndex,
+        questionCount: lengths[0],
+        groupCount: groups.length
+      };
+    }
+
+    function analyzeText(text) {
+      const lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
+      const { answerKeys, dataStartIndex, questionCount, groupCount } = parseAnswerKeys(lines);
+
+      const results = [];
+      const badLines = [];
+      let inputOrder = 0;
+
+      const questionStats = Array.from({ length: questionCount }, (_, i) => ({
+        soru_no: i + 1,
+        dogru: 0,
+        yanlis: 0,
+        bos: 0
+      }));
+
+      for (let index = dataStartIndex; index < lines.length; index++) {
+        const line = lines[index];
+        const originalLine = line;
+        const lineNo = index + 1;
+
+        if (!line.trim()) continue;
+        inputOrder += 1;
+
+        const parts = line.split(/\s+/, 2);
+        if (parts.length !== 2) {
+          badLines.push({
+            girdi_sirasi: inputOrder,
+            satir_no: lineNo,
+            satir: originalLine,
+            hata: 'Öğrenci no ve grup/cevap bölümü ayrıştırılamadı'
+          });
+          continue;
+        }
+
+        const studentNo = parts[0].trim();
+        const restIndex = line.indexOf(parts[1], line.indexOf(parts[0]) + parts[0].length);
+        const groupAndAnswers = line.slice(restIndex).trimStart().replace(/\t/g, ' ');
+
+        if (!groupAndAnswers.length) {
+          badLines.push({
+            girdi_sirasi: inputOrder,
+            satir_no: lineNo,
+            satir: originalLine,
+            hata: 'Grup bilgisi bulunamadı'
+          });
+          continue;
+        }
+
+        const group = groupAndAnswers[0];
+        let answers = groupAndAnswers.slice(1);
+
+        if (!(group in answerKeys)) {
+          badLines.push({
+            girdi_sirasi: inputOrder,
+            satir_no: lineNo,
+            satir: originalLine,
+            hata: `Geçersiz grup: ${group}`
+          });
+          continue;
+        }
+
+        if (answers.length < questionCount) {
+          answers = answers.padEnd(questionCount, ' ');
+        }
+
+        if (answers.length > questionCount) {
+          badLines.push({
+            girdi_sirasi: inputOrder,
+            satir_no: lineNo,
+            satir: originalLine,
+            hata: `Cevap uzunluğu beklenenden büyük: ${answers.length} > ${questionCount}`
+          });
+          continue;
+        }
+
+        const answerKey = answerKeys[group];
+        const { correct, wrong, blank, details } = compareAnswers(answers, answerKey);
+
+        const row = {
+          girdi_sirasi: inputOrder,
+          satir_no: lineNo,
+          ogrenci_no: studentNo,
+          grup: group,
+          cevaplar: answers,
+          cevap_anahtari: answerKey,
+          dogru: correct,
+          yanlis: wrong,
+          bos: blank
+        };
+
+        details.forEach((d, idx) => {
+          row[`soru_${idx + 1}_ogr`] = d.student_answer;
+          row[`soru_${idx + 1}_dogru`] = d.correct_answer;
+          row[`soru_${idx + 1}_durum`] = d.status;
+
+          if (d.status === 'DOGRU') questionStats[idx].dogru += 1;
+          else if (d.status === 'YANLIS') questionStats[idx].yanlis += 1;
+          else if (d.status === 'BOS') questionStats[idx].bos += 1;
+        });
+
+        results.push(row);
+      }
+
+      return {
+        answerKeys,
+        groupCount,
+        questionCount,
+        results,
+        badLines,
+        questionStats
+      };
+    }
+
+    function renderSummary(data) {
+      const { answerKeys, groupCount, questionCount, results, badLines } = data;
+
+      statsEl.innerHTML = `
+        <div class="stat"><div class="label">Grup Sayısı</div><div class="value">${groupCount}</div></div>
+        <div class="stat"><div class="label">Soru Sayısı</div><div class="value">${questionCount}</div></div>
+        <div class="stat"><div class="label">Geçerli Kayıt</div><div class="value">${results.length}</div></div>
+        <div class="stat"><div class="label">Problemli Satır</div><div class="value">${badLines.length}</div></div>
+      `;
+
+      const keyRows = Object.entries(answerKeys)
+        .map(([group, key]) => `<tr><td>${escapeHtml(group)}</td><td><code>${escapeHtml(key)}</code></td></tr>`)
+        .join('');
+
+      groupKeysBox.innerHTML = `
+        <h3>Grup Cevap Anahtarları</h3>
+        <div class="scroll">
+          <table>
+            <thead><tr><th>Grup</th><th>Cevap Anahtarı</th></tr></thead>
+            <tbody>${keyRows}</tbody>
+          </table>
+        </div>
+      `;
+
+      summaryCard.classList.remove('hidden');
+    }
+
+    function renderResultsTable(results) {
+      if (!results.length) {
+        resultsTable.innerHTML = '<tbody><tr><td>Geçerli kayıt bulunamadı.</td></tr></tbody>';
+        resultsCard.classList.remove('hidden');
+        return;
+      }
+
+      const headers = Object.keys(results[0]);
+      const headHtml = '<thead><tr>' + headers.map(h => `<th>${escapeHtml(h)}</th>`).join('') + '</tr></thead>';
+      const bodyHtml = '<tbody>' + results.map(row => {
+        return '<tr>' + headers.map(h => {
+          const value = row[h] ?? '';
+          return `<td>${escapeHtml(value)}</td>`;
+        }).join('') + '</tr>';
+      }).join('') + '</tbody>';
+
+      resultsTable.innerHTML = headHtml + bodyHtml;
+      resultsCard.classList.remove('hidden');
+    }
+
+    function renderBadTable(badLines) {
+      if (!badLines.length) {
+        badTable.innerHTML = '<tbody><tr><td>Problemli satır bulunmadı.</td></tr></tbody>';
+        badCard.classList.remove('hidden');
+        return;
+      }
+
+      const headers = Object.keys(badLines[0]);
+      const headHtml = '<thead><tr>' + headers.map(h => `<th>${escapeHtml(h)}</th>`).join('') + '</tr></thead>';
+      const bodyHtml = '<tbody>' + badLines.map(row => {
+        return '<tr>' + headers.map(h => `<td>${escapeHtml(row[h] ?? '')}</td>`).join('') + '</tr>';
+      }).join('') + '</tbody>';
+
+      badTable.innerHTML = headHtml + bodyHtml;
+      badCard.classList.remove('hidden');
+    }
+
+    function renderQuestionStatsTable(questionStats) {
+      if (!questionStats.length) {
+        questionStatsTable.innerHTML = '<tbody><tr><td>Soru istatistiği oluşmadı.</td></tr></tbody>';
+        questionStatsCard.classList.remove('hidden');
+        return;
+      }
+
+      const headers = Object.keys(questionStats[0]);
+      const headHtml = '<thead><tr>' + headers.map(h => `<th>${escapeHtml(h)}</th>`).join('') + '</tr></thead>';
+      const bodyHtml = '<tbody>' + questionStats.map(row => {
+        return '<tr>' + headers.map(h => `<td>${escapeHtml(row[h] ?? '')}</td>`).join('') + '</tr>';
+      }).join('') + '</tbody>';
+
+      questionStatsTable.innerHTML = headHtml + bodyHtml;
+      questionStatsCard.classList.remove('hidden');
+    }
+
+    async function handleAnalyze() {
+      try {
+        const file = fileInput.files[0];
+        if (!file) {
+          alert('Lütfen bir .txt dosyası seçin.');
+          return;
+        }
+
+        const text = await readFileAsText(file);
+        const data = analyzeText(text);
+
+        renderSummary(data);
+        renderResultsTable(data.results);
+        renderBadTable(data.badLines);
+        renderQuestionStatsTable(data.questionStats);
+
+        latestResultsCsv = toCsv(data.results);
+        latestBadCsv = toCsv(data.badLines.length ? data.badLines : [{ mesaj: 'Problemli satır bulunmadı' }]);
+        latestQuestionStatsCsv = toCsv(data.questionStats);
+
+        downloadResultsBtn.disabled = false;
+        downloadBadBtn.disabled = false;
+        downloadQuestionStatsBtn.disabled = false;
+      } catch (error) {
+        alert('Hata: ' + error.message);
+        console.error(error);
+      }
+    }
+
+    analyzeBtn.addEventListener('click', handleAnalyze);
+    downloadResultsBtn.addEventListener('click', () => downloadText('optik_sonuclar.csv', latestResultsCsv));
+    downloadBadBtn.addEventListener('click', () => downloadText('problemli_satirlar.csv', latestBadCsv));
+    downloadQuestionStatsBtn.addEventListener('click', () => downloadText('soru_istatistikleri.csv', latestQuestionStatsCsv));
+  </script>
+</body>
+</html>
+
