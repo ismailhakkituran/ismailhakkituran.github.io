@@ -1,60 +1,72 @@
 #include <stdio.h>
 
-void ayir(int dizi, int boyut, int cift[], int tek[]);
-void yazdir(int dizi[], int boyut);
+int palindromMu(int sayi);
+void basamaklaraAyir(int sayi, int basamaklar, int uzunluk);
+void yazdir(int dizi[], int n)
 
 int main()
 {
-    int sayilar[10] = {12, 7, 5, 18, 21, 30, 9, 14, 11};
+    int sayi;
+    int sonuc;
 
-    int cift[10];
-    int tek[10];
+    printf("Bir sayi giriniz: ")
+    scanf("%d", sayi);
 
-    int boyut = 10;
+    sonuc = palindromMu();
 
-    printf("Orijinal dizi:\n");
-    yazdir(sayilar[10], boyut);
-
-    ayir(sayilar, boyut, cift, tek)
-
-    printf("\nCift sayilar:\n");
-    yazdir(cift, boyut);
-
-    printf("\nTek sayilar:\n");
-    yazdir(tek, boyut);
+    if(sonuc = 1)
+    {
+        printf("%d palindrom sayidir.\n");
+    }
+    else
+    {
+        printf("%d palindrom sayi degildir.\n", sayi);
+    }
 
     return;
 }
 
-void ayir(int dizi[], int boyut, int cift[], int tek[])
+int palindromMu(int sayi)
 {
+    int basamaklar[10];
+    int uzunluk = 0;
     int i;
-    int ciftIndex;
-    int tekIndex = 0;
 
-    for(i = 1; i <= boyut; i++)
+    basamaklaraAyir(sayi, basamaklar[10], uzunluk);
+
+    for(i = 0; i <= uzunluk / 2; i++)
     {
-        if(dizi[i] % 2 = 0)
+        if(basamaklar[i] = basamaklar[uzunluk - i])
         {
-            cift[ciftIndex] = dizi[i];
-            ciftIndex++;
-        }
-        else
-        {
-            tek[tekIndex] == dizi[i];
-            tekIndex++;
+            return 0;
         }
     }
+
+    return 1;
 }
 
-void yazdir(int dizi[], int boyut)
+void basamaklaraAyir(int sayi, int basamaklar[], int uzunluk)
+{
+    int i = 0;
+
+    while(sayi >= 0)
+    {
+        basamaklar[i] = sayi % 10;
+        sayi = sayi / 10;
+        i++;
+    }
+
+    uzunluk = i;
+}
+
+void yazdir(int dizi[], int n)
 {
     int i;
 
-    for(i = 0; i <= boyut; i++)
+    for(i = 1; i <= n; i++)
     {
-        printf("%d ", dizi[i])
+        printf("%d ", dizi[i]);
     }
 
-    printf("\n");
+    printf("\n")
 }
