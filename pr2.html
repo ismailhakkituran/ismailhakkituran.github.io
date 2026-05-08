@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>8 Mayıs 2026 Programlama Sınavı - D/A Grupları</title>
+  <style>
+:root{--ink:#1f2937;--muted:#6b7280;--line:#e5e7eb;--bg:#f7f7fb;--card:#fff;--accent:#1d4ed8;}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,'Segoe UI',sans-serif;line-height:1.58;font-size:16px} .page{max-width:980px;margin:32px auto;padding:0 18px 48px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 28px rgba(15,23,42,.08);padding:34px} h1{font-size:1.75rem;margin:1.6rem 0 .9rem;border-top:1px solid var(--line);padding-top:1.25rem;color:#111827} h1:first-child{border-top:0;padding-top:0} h2{font-size:1.25rem;margin:1.25rem 0 .75rem}.lead{font-size:1.05rem;color:#374151}.exam-info{background:#eef4ff;border-left:5px solid var(--accent);padding:14px 18px;border-radius:12px;margin:0 0 22px} strong{color:#111827} ol{padding-left:1.5rem} li{margin:.45rem 0} a{color:var(--accent)} pre{background:#0f172a;color:#e5e7eb;border-radius:14px;padding:18px;overflow:auto;font-size:14px;line-height:1.5;border:1px solid #111827} code{font-family:'DejaVu Sans Mono','Consolas','Courier New',monospace} p code, li code{background:#eef2ff;color:#1e3a8a;padding:.12rem .32rem;border-radius:6px} hr{border:0;border-top:1px solid var(--line);margin:30px 0}.answer-block{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:14px 18px}.top-title{font-size:2rem;margin:0 0 8px}.meta{color:var(--muted);margin:0 0 24px}@media print{body{background:#fff}.page{max-width:none;margin:0;padding:0}.card{box-shadow:none;border:0;border-radius:0} pre{white-space:pre-wrap}}
+</style>
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <h1 class="top-title">8 Mayıs 2026 Programlama Sınavı - D/A Grupları</h1>
+      <p class="meta">Programlama sınavı — HTML sürümü</p>
+      <p>Sınav oturma düzeni:</p>
+<p>D GRUBU:    L19 9:00-10:30 A GRUBU:    R19 9:00-10:30</p>
+<p><strong>Sınav Kuralları:</strong></p>
+<ol>
+<li>Sınava salonuna telefon/akıllı saat/iletişim aracı getirmek yasaktır. Mecburi getirenler hoca masasına bırakmalıdırlar.</li>
+</ol>
+<ol>
+<li>Sınavda herkes kendi monitörüne odaklanmalıdır. Kendisini ve arkadaşını itham altında bırakacak hareketler yapmamalıdır.</li>
+</ol>
+<ol>
+<li>Sınava, kişisel bilgisayarı olanların getirmesi rica edilir. Sınav başlamadan ekranlarını gözetmenlere teyit ettirmelidirler (Windows + Tab). </li>
+</ol>
+<ol>
+<li>Kişisel bilgisayarı olanlar sınav esnasında sadece <a href="https://notepad-plus-plus.org/downloads/">notepad++</a> gibi basit editörler kullanmalıdırlar. VS Code vb. yapay zeka entegre edilen araçlar kullanılmamalıdır. Sınavdan önce bilgisayarınıza gerekli kurulumu yapınız. Görevliye editörünüzü gösteriniz.</li>
+</ol>
+<ol>
+<li>Sınava hazırlık için masaüstünde <code>main.c</code> dosyasını oluşturup, derleyip &quot;merhaba dunya&quot; yazdırıp. Sınavın başlaması beklenmelidir.</li>
+</ol>
+<ol>
+<li>Masaüstüne VSCode WSL Terminalden gitmek için:</li>
+</ol>
+<pre><code>  cd /mnt/c/Users/Vagrant/Desktop
+  touch main.c
+  code .
+  gcc -o main main.c</code></pre>
+<ol>
+<li>Sınavdan sonra kamera görüntüleri incelenecektir. Sınav esnasında görülmeyen şüpheli hususlar, sınavdan sonra da değerlendirilebilir.</li>
+</ol>
+<hr>
+<h1>SORU 1</h1>
+<p>Diziyi küçükten büyüğe sıralama örneği için gramer + mantık + dizi + fonksiyon + döngü hatası içeren kod verilmiştir.
+<a href="soru1.c" download><br>1. Kodu indirmek için tıklayınız. </a> </p>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+void sirala(int dizi, int boyut);
+void yazdir(int dizi[], int boyut)
+
+int main()
+{
+    int sayilar[6] = {40, 10, 30, 50, 20};
+
+    int n = 6;
+    int i;
+
+    printf(&quot;Siralama oncesi dizi:\n&quot;);
+    yazdir(sayilar, n);
+
+    sirala(sayilar[6], n);
+
+    printf(&quot;Siralama sonrasi dizi:\n&quot;);
+
+    for(i = 0; i &lt;= n; i++)
+    {
+        printf(&quot;%d &quot;, sayilar);
+    }
+
+    return;
+}
+
+void sirala(int dizi[], int boyut)
+{
+    int i, j, temp;
+
+    for(i = 0; i &lt;= boyut; i++)
+    {
+        for(j = 0; j &lt; boyut; j++)
+        {
+            if(dizi[j] &lt; dizi[j + 1])
+            {
+                temp = dizi[j];
+                dizi[j] = dizi[j + 1];
+                dizi[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void yazdir(int dizi[], int boyut)
+{
+    int i;
+
+    for(i = 1; i &lt;= boyut; i++)
+    {
+        printf(&quot;%d &quot;, dizi[i]);
+    }
+
+    printf(&quot;\n&quot;)
+}</code></pre>
+<p>Beklenen Çıktı</p>
+<p>Kod düzeltildiğinde çıktı şu mantıkta olmalıdır:</p>
+<pre><code>Siralama oncesi dizi:
+40 10 30 50 20 0
+
+Siralama sonrasi dizi:
+0 10 20 30 40 50</code></pre>
+<h1>SORU 2</h1>
+<p>Aşağıdaki örnek palindrom kontrolü için bilerek çok sayıda gramer + mantık + dizi + fonksiyon + döngü hatası içeren bir C kodu bulunmaktadır.
+  <a href="soru2.c" download><br>2. Kodu indirmek için tıklayınız. </a> </p>
+
+
+<pre><code>#include &lt;stdio.h&gt;
+
+int palindromMu(int sayi);
+void basamaklaraAyir(int sayi, int basamaklar, int uzunluk);
+void yazdir(int dizi[], int n)
+
+int main()
+{
+    int sayi;
+    int sonuc;
+
+    printf(&quot;Bir sayi giriniz: &quot;)
+    scanf(&quot;%d&quot;, sayi);
+
+    sonuc = palindromMu();
+
+    if(sonuc = 1)
+    {
+        printf(&quot;%d palindrom sayidir.\n&quot;);
+    }
+    else
+    {
+        printf(&quot;%d palindrom sayi degildir.\n&quot;, sayi);
+    }
+
+    return;
+}
+
+int palindromMu(int sayi)
+{
+    int basamaklar[10];
+    int uzunluk = 0;
+    int i;
+
+    basamaklaraAyir(sayi, basamaklar[10], uzunluk);
+
+    for(i = 0; i &lt;= uzunluk / 2; i++)
+    {
+        if(basamaklar[i] = basamaklar[uzunluk - i])
+        {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+void basamaklaraAyir(int sayi, int basamaklar[], int uzunluk)
+{
+    int i = 0;
+
+    while(sayi &gt;= 0)
+    {
+        basamaklar[i] = sayi % 10;
+        sayi = sayi / 10;
+        i++;
+    }
+
+    uzunluk = i;
+}
+
+void yazdir(int dizi[], int n)
+{
+    int i;
+
+    for(i = 1; i &lt;= n; i++)
+    {
+        printf(&quot;%d &quot;, dizi[i]);
+    }
+
+    printf(&quot;\n&quot;)
+}</code></pre>
+<p>Düzeltilmiş program şu şekilde çalışmalıdır:</p>
+<pre><code>Bir sayi giriniz: 12321
+12321 palindrom sayidir.</code></pre>
+<pre><code>Bir sayi giriniz: 12345
+12345 palindrom sayi degildir.</code></pre>
+    </section>
+  </main>
+</body>
+
+</html>
