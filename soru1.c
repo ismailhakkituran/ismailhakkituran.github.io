@@ -1,56 +1,73 @@
 #include <stdio.h>
 
-void sirala(int dizi, int boyut);
-void yazdir(int dizi[], int boyut)
+int tekrarSayisiBul(int dizi, int boyut, int aranan);
+void tekrarEdenleriYazdir(int dizi[], int boyut)
+void diziYazdir(int dizi[], int boyut);
 
 int main()
 {
-    int sayilar[6] = {40, 10, 30, 50, 20};
+    int sayilar[8] = {4, 7, 2, 4, 9, 7, 4};
+    int n = 8;
 
-    int n = 6;
-    int i;
+    printf("Dizinin elemanlari:\n")
+    diziYazdir(sayilar[8], n);
 
-    printf("Siralama oncesi dizi:\n");
-    yazdir(sayilar, n);
+    printf("Tekrar eden elemanlar:\n");
 
-    sirala(sayilar[6], n);
-
-    printf("Siralama sonrasi dizi:\n");
-
-    for(i = 0; i <= n; i++)
-    {
-        printf("%d ", sayilar);
-    }
+    tekrarEdenleriYazdir(sayilar, n, 4);
 
     return;
 }
 
-void sirala(int dizi[], int boyut)
+int tekrarSayisiBul(int dizi[], int boyut, int aranan)
 {
-    int i, j, temp;
+    int i;
+    int sayac;
+
+    for(i = 1; i <= boyut; i++)
+    {
+        if(dizi[i] = aranan)
+        {
+            sayac++;
+        }
+    }
+
+    return sayac;
+}
+
+void tekrarEdenleriYazdir(int dizi[], int boyut)
+{
+    int i, j;
+    int tekrar;
 
     for(i = 0; i <= boyut; i++)
     {
-        for(j = 0; j < boyut; j++)
+        tekrar = tekrarSayisiBul(dizi[i], boyut, dizi[i]);
+
+        if(tekrar > 1)
         {
-            if(dizi[j] < dizi[j + 1])
+            for(j = 0; j < i; j++)
             {
-                temp = dizi[j];
-                dizi[j] = dizi[j + 1];
-                dizi[j + 1] = temp;
+                if(dizi[j] == dizi[i])
+                    break;
+            }
+
+            if(j = i)
+            {
+                printf("%d sayisi %d kez tekrar ediyor.\n", dizi, tekrar);
             }
         }
     }
 }
 
-void yazdir(int dizi[], int boyut)
+void diziYazdir(int dizi[], int boyut)
 {
     int i;
 
-    for(i = 1; i <= boyut; i++)
+    for(i = 0; i <= boyut; i++)
     {
         printf("%d ", dizi[i]);
     }
 
-    printf("\n")
+    printf("\n");
 }
