@@ -186,21 +186,21 @@
       </div>
 
       <p class="footer-note">
-        Beklenen biçim: Dosyanın başında optik okuyucunun ürettiği cevap anahtarları;
-        devamında öğrenci tipi, öğrenci no, bölüm kodları, grup ve cevaplar.
+        Beklenen biçim: Dosyanın başında <code>1:ABC...</code>, <code>2:BCD...</code> şeklinde cevap anahtarları;
+        devamında <code>ogrenci_no grup+cevaplar</code> satırları.
         <br>
-        Optik okuyucudan gelen <code>.txt</code> dosyasını doğrudan yükleyebilirsiniz.
+        <code>.txt</code> dosyanızı biçime uygun hale getirmek için kolon bazında düzenleme yapan <a href="https://columneditor.com/"> aracı</a> kullanabilirsiniz.
       </p>
 
       <div style="margin-top:12px;">
         <strong>Yüklenecek Dosya Formatı: (Grup ve soru sayısı otomatik algılanacaktır.)</strong>
         <pre>
-              1DCABEBDBAE
-              2DCABEBDBAE
-Ö25060425013 21DCABEBDBAE
-Ö25060427013 22DCABEBDCAE
-Ö24061013013 22DCABEBDBAE
-Ö24060827013 21ACABEBDBBA
+1:DCABEBDBAE
+2:DCABEBDBAE
+25060425 1DCABEBDBAE 
+25060427 2DCABEBDCAE 
+24061013 2DCABEBDBAE 
+24060827 1ACABEBDBBA 
 ...
 ...
         </pre>
@@ -362,7 +362,7 @@
         const raw = lines[i].trim();
         if (!raw) continue;
 
-        const match = raw.match(/^(\d+)\s*:?\s*([A-Z ]+)$/);
+        const match = raw.match(/^(\d+)\s*:\s*([A-Z ]+)$/);
         if (match) {
           const group = match[1];
           const key = cleanKey(match[2]);
@@ -375,7 +375,7 @@
 
       const groups = Object.keys(answerKeys);
       if (!groups.length) {
-        throw new Error("Cevap anahtarları bulunamadı. Başta '1ABCDE' veya '1:ABCDE' gibi satırlar olmalı.");
+        throw new Error("Cevap anahtarları bulunamadı. Başta '1:ABCDE' gibi satırlar olmalı.");
       }
 
       const lengths = [...new Set(Object.values(answerKeys).map(v => v.length))];
@@ -389,39 +389,6 @@
         questionCount: lengths[0],
         groupCount: groups.length
       };
-    }
-
-    function isAnswerText(value) {
-      return /^[A-Z *-]*$/.test(value);
-    }
-
-    function parseStudentLine(line, answerKeys, questionCount) {
-      const match = line.match(/^.(\d{8})(.*)$/);
-      if (!match) {
-        return null;
-      }
-
-      const studentNo = match[1];
-      const rest = match[2].replace(/\t/g, ' ');
-      const validGroups = Object.keys(answerKeys);
-      const candidates = [];
-
-      for (let i = 0; i < rest.length; i++) {
-        const group = rest[i];
-        if (!validGroups.includes(group)) continue;
-
-        const answers = rest.slice(i + 1).trimEnd();
-        if (answers.length <= questionCount && isAnswerText(answers)) {
-          candidates.push({ studentNo, group, answers, answerLength: answers.length });
-        }
-      }
-
-      if (!candidates.length) {
-        return null;
-      }
-
-      candidates.sort((a, b) => b.answerLength - a.answerLength);
-      return candidates[0];
     }
 
     function analyzeText(text) {
@@ -447,8 +414,8 @@
         if (!line.trim()) continue;
         inputOrder += 1;
 
-        const parsed = parseStudentLine(line, answerKeys, questionCount);
-        if (!parsed) {
+        const parts = line.split(/\s+/, 2);
+        if (parts.length !== 2) {
           badLines.push({
             girdi_sirasi: inputOrder,
             satir_no: lineNo,
@@ -458,8 +425,22 @@
           continue;
         }
 
-        const { studentNo, group } = parsed;
-        let answers = parsed.answers;
+        const studentNo = parts[0].trim();
+        const restIndex = line.indexOf(parts[1], line.indexOf(parts[0]) + parts[0].length);
+        const groupAndAnswers = line.slice(restIndex).trimStart().replace(/\t/g, ' ');
+
+        if (!groupAndAnswers.length) {
+          badLines.push({
+            girdi_sirasi: inputOrder,
+            satir_no: lineNo,
+            satir: originalLine,
+            hata: 'Grup bilgisi bulunamadı'
+          });
+          continue;
+        }
+
+        const group = groupAndAnswers[0];
+        let answers = groupAndAnswers.slice(1);
 
         if (!(group in answerKeys)) {
           badLines.push({
