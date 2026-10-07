@@ -36,10 +36,10 @@
 				  <li><a href="index.html">Home</a></li>
 				  <li><a href="wirelessnetworks.html">WSNs</a></li>
 				  <li><a href="systemprogramming.html">System Programming</a></li>
-				  <li><a href="index.html">Operating Systems</a></li>
-				  <li><a href="#">Projects</a></li>
-				  <li><a href="#publications">Publications</a></li>
-				  <li><a href="#">CV</a></li>
+				  <li><a href="os.html">Operating Systems</a></li>
+				  <li><a href="projects.html">Projects</a></li>
+				  <li><a href="publications.html">Publications</a></li>
+				  <li><a href="cv.html">CV</a></li>
 		  </ul>
 		</div>
 	  </div>
@@ -56,7 +56,7 @@
 
 
             <!-- Entries Column -->
-            <div class="col-md-9" style="height: 200vh;">
+            <div class="col-md-9">
 
               <div class="col-md-10">
                   <div style="font-family: 'Oswald', sans-serif; font-size: 22px;">İsmail Hakkı TURAN</div>
@@ -192,7 +192,7 @@
 
   <h3>TO-DO from Week_2 Application:</h3>
 	<input type="checkbox" id="skillweek2" name="skillweek2" value="1">
-  <label for="skill3"> I've sended my student number to local server.</label><br>
+  <label for="skillweek2"> I've sent my student number to local server.</label><br>
 
 
 <br><br>
@@ -241,7 +241,7 @@
 	<li>Multi-threaded  matrix multiplication example<a href="https://github.com/ismailhakkituran/matrix-mul-multi"> repository </a></li>
 </ul>
 
-Run shell commands with their parameter options, and make it a habit. Click<a href="https://github.com/ismailhakkituran/ismailhakkituran.github.io/blob/main/system-app-27-11-2025.md"> here </a></h3> to access the documentation page for the commands used in the final exercise.
+Run shell commands with their parameter options, and make it a habit. Click<a href="https://github.com/ismailhakkituran/ismailhakkituran.github.io/blob/main/system-app-27-11-2025.md"> here </a> to access the documentation page for the commands used in the final exercise.
 <!--p>Click the <a href="https://github.com/ismailhakkituran/multithread-socket-application"> repository </a>link</p-->
 		<!--h3>Sending mails using SMTP protocol with Libraries</h3>
 		<p>Try to implement these programs that can send e-mail using SMTP-Mail-Libraries
@@ -289,11 +289,6 @@ Run shell commands with their parameter options, and make it a habit. Click<a hr
 		</li>
 		<li>
       <p>Adapt <a href="https://gist.github.com/anonymous/2556469"><i>this</i></a> improved version by Ahmet A. Akın which should be developed for Java List Collections</p-->
-		</li>
-
-
-
-		</ul>
     <br>
 
 		</div>
@@ -302,12 +297,12 @@ Run shell commands with their parameter options, and make it a habit. Click<a hr
 		<div style="margin-left:40px; text-align:justify;">
 
 
-      Run shell commands with their parameter options, and make it a habit. Click<a href="https://github.com/ismailhakkituran/ismailhakkituran.github.io/blob/main/system-app-04-12-2025.md"> here </a></h3> to access the documentation page for the commands used in the final exercise.
+      Run shell commands with their parameter options, and make it a habit. Click<a href="https://github.com/ismailhakkituran/ismailhakkituran.github.io/blob/main/system-app-04-12-2025.md"> here </a> to access the documentation page for the commands used in the final exercise.
 
 
 <br>
 <br>
-    <h4><i>The next exercise will be announced soon via Classroom...</i></p></h4>
+    <h4><i>The next exercise will be announced soon via Classroom...</i></h4>
 
 
     <br>    <br>    <br>    <br>    <br>
@@ -340,6 +335,16 @@ Run shell commands with their parameter options, and make it a habit. Click<a hr
     </div>
 <a style="color:#b5bec9;font-size:0.8em; float:right;" href="https://github.com/mavroudisv/plain-academic">Plain Academic</a>
 -->
+<script>
+  // Remember checkbox progress in the student's browser
+  document.querySelectorAll('input[type="checkbox"]').forEach(function (box) {
+    var key = 'sysprog-' + box.id;
+    try { box.checked = localStorage.getItem(key) === '1'; } catch (e) {}
+    box.addEventListener('change', function () {
+      try { localStorage.setItem(key, box.checked ? '1' : '0'); } catch (e) {}
+    });
+  });
+</script>
 </body>
 
 </html>
