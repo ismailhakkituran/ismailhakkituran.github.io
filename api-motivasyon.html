@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<!--
+    Plain-Academic by Vasilios Mavroudis
+    Released under the Simplified BSD License/FreeBSD (2-clause) License.
+    https://github.com/mavroudisv/plain-academic
+-->
+
+<html lang="tr">
+<head>
+  <title>API Neden Önemli? | İsmail Hakkı Turan</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="API dersi öğrencileri için misafir konuşması: Öğrendiklerinizin freelance, startup ve kurumsal kariyerdeki karşılığı.">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
+  <style>
+    table.api { border-collapse: collapse; width: 100%; margin: 10px 0 20px; }
+    table.api th, table.api td { border: 2px solid green; padding: 6px 10px; vertical-align: top; }
+    table.api th { background: #eef7ee; }
+    blockquote.key { border-left: 5px solid green; font-size: 17px; background: #f7fbf7; }
+    .note { color: #666; font-size: 0.9em; }
+    .example { margin-bottom: 25px; }
+    pre { white-space: pre-wrap; word-break: break-all; font-size: 12px; }
+    table.api td, table.api th, h1, h2, h3, blockquote { text-align: left; }
+    @media (max-width: 600px) { .indent { margin-left: 0 !important; text-align: left !important; } }
+  </style>
+</head>
+<body>
+
+
+<!-- Navigation -->
+	<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+	  <div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+		</div>
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		  <ul class="nav navbar-nav">
+				  <li><a href="index.html">Home</a></li>
+				  <li><a href="wirelessnetworks.html">WSNs</a></li>
+				  <li><a href="systemprogramming.html">System Programming</a></li>
+				  <li><a href="os.html">Operating Systems</a></li>
+				  <li><a href="projects.html">Projects</a></li>
+				  <li><a href="publications.html">Publications</a></li>
+				  <li><a href="cv.html">CV</a></li>
+		  </ul>
+		</div>
+	  </div>
+	</nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+
+        <div class="col-md-10">
+          <div style="font-family: 'Oswald', sans-serif; font-size: 22px;">İsmail Hakkı TURAN</div>
+          <p>Room 236-C, Computer Engineering Department<br>
+          hakki.turan[at]bil.omu.edu.tr<br><br></p>
+        </div>
+
+        <div class="indent" style="margin-left:40px; text-align:justify; clear:both;">
+
+        <h1>API Öğrenmek Neden Değerli?</h1>
+        <p><i>API dersi öğrencileri için misafir konuşması — Kasım 2026</i><br>
+        Dersin materyalleri: <a href="https://github.com/atesnrllh/api-dersi">github.com/atesnrllh/api-dersi</a></p>
+
+        <blockquote class="key">
+          API öğrenmek, kendi fikrinizi çalışan ve başkalarının kullanabildiği bir sisteme dönüştürme becerisidir.
+        </blockquote>
+
+        <!-- 1 -->
+        <h2>1. Şimdiye kadar ne öğrendiniz?</h2>
+        <div class="indent" style="margin-left:40px;">
+        <p>Beş haftada bir kitap kataloğu API'si yazdınız. Bu tabloda her konunun gerçek bir üründe hangi sorunu çözdüğü var:</p>
+
+        <table class="api">
+          <tr><th>Derste yaptığınız</th><th>Gerçek bir üründe karşılığı</th></tr>
+          <tr><td>FastAPI sunucusu + HTTPX istemcisi, HTTP ve JSON (Hafta 1)</td>
+              <td>Mobil uygulama, web sitesi ve başka şirketlerin sistemleri aynı veriye aynı yoldan ulaşır.</td></tr>
+          <tr><td><code>POST</code>, istek gövdesi, <code>201</code> ve <code>Location</code> (Hafta 2)</td>
+              <td>Sipariş, rezervasyon ya da başvuru oluşturmak, yani kullanıcının sisteme bir şey kaydetmesi.</td></tr>
+          <tr><td>REST ile kaynak tasarımı (Hafta 3)</td>
+              <td>Başka bir geliştirici sizin API'nizi açıklama okumadan da tahmin edebilir: <code>/books/42/reviews</code>.</td></tr>
+          <tr><td>CRUD: <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code> (Hafta 4)</td>
+              <td>Kullanıcı yanlış girdiği bilgiyi düzeltir, iptal eder, siler. Bu dört iş neredeyse her üründe vardır.</td></tr>
+          <tr><td>Alan kuralları, <code>422</code> ve hata yanıtları (Hafta 5)</td>
+              <td>Bozuk veri sisteme girmez ve müşteri neyi yanlış gönderdiğini anlar. Destek ekibine gelen sorular azalır.</td></tr>
+        </table>
+
+        <p>Dönemin geri kalanında gelecekler de ürünün eksik parçaları:</p>
+        <table class="api">
+          <tr><th>Gelecek konu</th><th>Çözdüğü sorun</th></tr>
+          <tr><td>PostgreSQL + SQLModel</td><td>Sunucu yeniden başladığında sipariş kaybolmaz.</td></tr>
+          <tr><td>pytest</td><td>Yeni bir özellik eklerken eskisini bozmadığınızı bilirsiniz.</td></tr>
+          <tr><td>Token ve erişim denetimi</td><td>Kimse başkasının kaydını göremez veya değiştiremez.</td></tr>
+          <tr><td>Harici API + Redis önbellek</td><td>Başka servisleri kullanırsınız; sık okunan veriyi hızlı ve ucuz sunarsınız.</td></tr>
+          <tr><td>OpenAPI / Swagger dokümantasyonu</td><td>Hiç tanışmadığınız bir geliştirici servisinizi kullanabilir.</td></tr>
+        </table>
+
+        <p>Bir arkadaşınız mobil uygulama geliştiriyorsa biri servisi, diğeri ekranı yazar. Aranızdaki anlaşma API'dir.</p>
+
+        <figure style="margin:20px 0;">
+        <svg viewBox="0 0 720 230" width="100%" role="img" aria-label="Mobil uygulama, web sitesi ve başka şirketler sizin API'nize istek atar; API'niz veritabanından ve harici API'lerden veri alır." style="max-width:720px; font-family:Helvetica,Arial,sans-serif; font-size:14px;">
+          <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2e7d32"/></marker></defs>
+          <g fill="#f7fbf7" stroke="#2e7d32" stroke-width="2">
+            <rect x="10" y="15" width="160" height="50" rx="8"/><rect x="10" y="90" width="160" height="50" rx="8"/><rect x="10" y="165" width="160" height="50" rx="8"/>
+            <rect x="275" y="70" width="170" height="90" rx="10" fill="#2e7d32"/>
+            <rect x="550" y="35" width="160" height="60" rx="8"/><rect x="550" y="135" width="160" height="60" rx="8"/>
+          </g>
+          <g stroke="#2e7d32" stroke-width="2" marker-end="url(#ar)" fill="none">
+            <line x1="170" y1="40" x2="272" y2="95"/><line x1="170" y1="115" x2="272" y2="115"/><line x1="170" y1="190" x2="272" y2="135"/>
+            <line x1="445" y1="100" x2="547" y2="68"/><line x1="445" y1="130" x2="547" y2="162"/>
+          </g>
+          <g text-anchor="middle" fill="#222">
+            <text x="90" y="45">Mobil uygulama</text><text x="90" y="120">Web sitesi</text><text x="90" y="195">Başka şirketler</text>
+            <text x="360" y="108" fill="#fff" font-weight="bold" font-size="16">Sizin API'niz</text><text x="360" y="130" fill="#fff" font-size="12">FastAPI + Pydantic</text>
+            <text x="630" y="62">Veritabanı</text><text x="630" y="80" font-size="12">PostgreSQL</text>
+            <text x="630" y="160">Harici API'ler</text><text x="630" y="178" font-size="12">İBB, NASA, Open-Meteo…</text>
+          </g>
+        </svg>
+        <figcaption class="note">Ekranlar değişir, ama hepsi aynı API'ye istek atar. Siz de başka API'leri kullanırsınız.</figcaption>
+        </figure>
+        </div>
+
+        <!-- 2 -->
+        <h2>2. Üç kariyer yolunda karşılığı</h2>
+        <div class="indent" style="margin-left:40px;">
+        <table class="api">
+          <tr><th>Hedefiniz</th><th>API becerisi size ne kazandırır?</th></tr>
+          <tr><td><b>Freelance / bağımsız çalışma</b></td>
+              <td>Müşterinin sipariş, rezervasyon veya raporlama işini çalışan bir sisteme dönüştürmek; mevcut servisleri birbirine bağlamak.</td></tr>
+          <tr><td><b>Startup / kendi ürününüz</b></td>
+              <td>Fikrin temel işleyişini kendiniz kurmak, ilk kullanıcılarla denemek ve hızlıca değiştirmek.</td></tr>
+          <tr><td><b>Kurumsal kariyer</b></td>
+              <td>Ekiplerin ve sistemlerin birbirine bağlandığı işlerde geliştirme, test, hata ayıklama ve dokümantasyon.</td></tr>
+        </table>
+        <p><i>Bu beceri tek başına iş ya da şirket garantisi vermez. Ama bir fikir üzerinde harekete geçmeniz için elinize somut bir araç verir.</i></p>
+        </div>
+
+        <!-- 3 -->
+        <h2>3. Gerçek örnekler: API ile para kazanmak</h2>
+        <div class="indent" style="margin-left:40px;">
+
+        <div class="example">
+        <h3>Bannerbear: "Veriyi gönder, reklam görselini al."</h3>
+        <p><a href="https://www.bannerbear.com/">Bannerbear</a>, API üzerinden şablonlardan görsel ve video üretiyor. Bir mağaza ürün adını, fotoğrafını ve fiyatını gönderir; kampanya görselleri otomatik hazırlanır.</p>
+        <ul>
+          <li><a href="https://www.bannerbear.com/pricing/">Fiyat sayfasındaki</a> başlangıç paketi: <b>aylık 49 $, 1.000 API kredisi</b>.</li>
+          <li>Kurucu Jon Yongfook <a href="https://www.bannerbear.com/journey-to-10k-mrr/">gelişim hikâyesinde</a> ürünü REST API olarak sunmaya geçtiğini ve <b>aylık 10.000 $ tekrarlayan gelire</b> ulaştığını anlatıyor.</li>
+        </ul>
+        <p><b>Dersle bağlantısı:</b> İsteği almak, alanları doğrulamak, sonucu döndürmek, kullanımı kaydetmek, API'yi belgelemek.<br>
+        <b>Siz ne yapabilirsiniz?</b> Bir emlak ofisi için ilan görseli ya da bir kurs için kişiye özel sertifika üreten küçük bir servis.</p>
+        </div>
+
+        <div class="example">
+        <h3>PDFMonkey: "JSON gönder, PDF al."</h3>
+        <p><a href="https://pdfmonkey.io/pricing">PDFMonkey</a>, tek bir REST API çağrısıyla rapor, fatura ve sertifika üretiyor. Paketlerinden ikisi (KDV hariç):</p>
+        <ul>
+          <li>Ayda <b>300 belge: 5 €</b></li>
+          <li>Ayda <b>3.000 belge: 15 €</b></li>
+        </ul>
+        <p><b>Örnek müşteri:</b> Kursu bitiren 800 kişiye isimlerine özel sertifika hazırlayacak bir eğitim kurumu. İsimleri tek tek yazmak yerine verileri gönderir, belgeleri alır.<br>
+        <b>Dersle bağlantısı:</b> REST, JSON, belgenin durumunu veritabanında tutmak, anlaşılır hata yanıtları, dokümantasyon.</p>
+        </div>
+
+        <div class="example">
+        <h3>Freelance: "İki sistemi birbirine bağlamak."</h3>
+        <p>Upwork'teki <a href="https://www.upwork.com/services/product/development-it-api-integration-rest-api-webhooks-automation-2091553814918813414">bir hizmet ilanında</a> bir geliştirici REST API, ödeme, CRM ve e-ticaret entegrasyonlarını <b>99 $, 199 $ ve 399 $</b> paketlerle sunuyor. Aynı ilanda <b>API dokümantasyonu ayrıca +40 $</b>.</p>
+        <p><b>Örnek müşteri isteği:</b> "Mağazaya sipariş geldiğinde müşteri bilgisi CRM'e aktarılsın, çalışan aynı bilgiyi tekrar yazmasın."<br>
+        Dokümantasyonun ayrı fiyatlandırılması "Bunu neden yazıyoruz?" sorusunun cevabı.</p>
+        </div>
+
+        <div class="example">
+        <h3>Freelance: "Postman koleksiyonumuz hazır, entegrasyonu yapacak kişi arıyoruz."</h3>
+        <p>Bir <a href="https://www.upwork.com/freelance-jobs/apply/Shopify-Developer-Needed-API-Integration_~022113751788100879622/">Shopify entegrasyonu iş ilanında</a> müşteri, siparişlerin API ile gönderim sağlayıcısına aktarılmasını ve gönderim durumunun Shopify'a geri gelmesini istiyor. Sağlayıcının endpoint'leri ve dokümantasyonu <b>bir Postman koleksiyonu olarak</b> veriliyor.</p>
+        <p>Derste açtığınız Postman, müşterinin işi tarif ederken kullandığı araçla aynı.</p>
+        </div>
+
+        <p class="note"><b>Önemli ayrım:</b> Şirket geliri net kâr değildir. Fiyat sayfası toplam geliri göstermez. Freelance ilanındaki fiyat, gerçekleşmiş bir satış anlamına gelmez; iş ilanı ise piyasada gerçek bir talep olduğunu gösterir. Fiyatlar Kasım 2026'da kontrol edildi ve değişebilir; Upwork ilanları zamanla kaldırılabilir.</p>
+        </div>
+
+        <!-- 4 -->
+        <h2>4. Türkiye'den iki açık API</h2>
+        <div class="indent" style="margin-left:40px;">
+
+        <div class="example">
+        <h3>İBB Açık Veri Portalı: Şehrin verisi bir istek uzağınızda</h3>
+        <p>İstanbul Büyükşehir Belediyesi, <a href="https://data.ibb.gov.tr/">data.ibb.gov.tr</a> üzerinden <b>565 veri setini</b> hem indirilebilir dosya hem de API olarak sunuyor. Bunlar arasında ulaşım, otopark, su, çevre ve kültür verileri var. Portal standart bir REST API kullanıyor (CKAN):</p>
+<pre>GET https://data.ibb.gov.tr/api/3/action/package_search?q=otopark</pre>
+        <p>En dikkat çekici örnek <a href="https://data.ibb.gov.tr/dataset/ispark-otopark-detay-bilgileri-web-servisi">İSPARK web servisi</a>. Anahtar gerektirmiyor ve otoparklardaki <b>boş yer sayısını canlı</b> veriyor:</p>
+<pre>GET https://api.ibb.gov.tr/ispark/ParkDetay?id=2338
+
+[{ "parkName": "19 Mayıs Açık", "district": "ŞİŞLİ",
+   "capacity": 65, "emptyCapacity": 19,
+   "updateDate": "03.11.2026 15:45:01",
+   "tariff": "0-1 Saat : 140,00;1-2 Saat : 180,00;...", ... }]</pre>
+        <p>Kurum, servisin Türkçe ve İngilizce <b>kullanım dokümanını</b> da yayımlıyor. Bir geliştiricinin bu servisi kullanabilmesi için endpoint'in tek başına yetmediğini, dokümana da ihtiyaç olduğunu gösteriyor.</p>
+        <p><b>Dersle bağlantısı:</b> Hafta 1'de yazdığınız HTTPX istemcisi bu adrese de aynı şekilde istek atabilir; yol ve sorgu parametreleri, JSON dizisi ve nesnesi de aynı. 12. haftada <i>harici API kullanımı</i> ve <i>önbellek</i> konusu için de hazır bir örnek: Boş yer sayısı birkaç dakikada bir değişiyor, her kullanıcı isteğinde İBB'ye tekrar sormak gerekir mi?<br>
+        <b>Siz ne yapabilirsiniz?</b> "Gideceğim ilçede boş yeri olan en yakın otopark" servisi. Bunun için kendi API'niz İBB'den veriyi alır, filtreler ve sonucu kendi biçiminde döndürür.</p>
+        </div>
+
+        <div class="example">
+        <h3>Hürriyet Developers API: Bir API'nin yaşam döngüsü</h3>
+        <p>Hürriyet 2016'da <code>developers.hurriyet.com.tr</code> adresinde bir geliştirici platformu açtı (<a href="https://webrazzi.com/2016/09/09/hurriyet-yazilim-gelistiriciler-icin-api-yayinladi/">Webrazzi haberi</a>). Haberler, köşe yazıları, foto galeriler, kategoriler ve yazarlar REST API ile sunuluyordu. Yalnızca <code>GET</code> destekleniyordu, API anahtarı gerekiyordu, istek sınırları vardı. Platformda dokümantasyon ve deneme sayfası da bulunuyordu.</p>
+        <p>Şirketin hedefi, geliştiricilerin bu içerikle farklı haber uygulamaları yapmasıydı. Gerçekten de geliştiriciler bu API için
+        <a href="https://github.com/yakupadakli/python-hurriyet">Python</a>,
+        <a href="https://www.npmjs.com/package/hurriyet">JavaScript</a>,
+        <a href="https://www.rubydoc.info/gems/hurriyet_cli/0.3.0">Ruby</a> ve
+        <a href="https://hackage.haskell.org/package/hurriyet-0.2.0.0/docs/doc-index.html">Haskell</a> kütüphaneleri yazdı. İyi belgelenmiş bir API, sahibinin yazmadığı kodların ortaya çıkmasını sağlar.</p>
+        <p>Kasım 2026 itibarıyla ise <code>developers.hurriyet.com.tr</code> adresi artık açılmıyor. Bu kütüphanelerin ve onları kullanan uygulamaların bağlandığı servis yok.</p>
+        <p><b>Dersle bağlantısı:</b> İki tarafı da görüyoruz. Sağlayıcı olarak: dokümantasyon ve API anahtarı (Hafta 9–13). Kullanıcı olarak: Başka birinin API'sine bağlıysanız, o servis yanıt vermediğinde uygulamanızın ne yapacağını önceden düşünmeniz gerekir (Hafta 12).</p>
+        </div>
+
+        </div>
+
+        <!-- 5 -->
+        <h2>5. İnsanlık, doğa ve uzay için açık API'ler</h2>
+        <div class="indent" style="margin-left:40px;">
+        <p>API'ler yalnızca para kazanmak için yazılmıyor. Bilim kurumları, verilerini herkesin bir istekle ulaşabileceği şekilde açıyor. Aşağıdakilerin hepsini 3 Kasım 2026'da denedim, hepsi JSON döndürüyor. Çoğu anahtar istemiyor; Hafta 1'deki HTTPX istemcinizle hemen deneyebilirsiniz.</p>
+
+        <figure style="margin:15px 0;">
+          <img class="img-responsive" src="api-talk/hurricane.jpg" alt="Uluslararası Uzay İstasyonu'ndan çekilmiş Helene Kasırgası" width="800" loading="lazy">
+          <figcaption class="note">Helene Kasırgası, Uluslararası Uzay İstasyonu'ndan. NASA EONET gibi API'ler bu tür doğal olayları koordinatlarıyla listeliyor. (Görsel: NASA, kamu malı)</figcaption>
+        </figure>
+
+        <h3>Meteoroloji ve afetler</h3>
+        <table class="api">
+          <tr><th>API</th><th>Ne veriyor?</th><th>Örnek istek</th></tr>
+          <tr><td><a href="https://open-meteo.com/en/docs">Open-Meteo</a><br><span class="note">Anahtar yok</span></td>
+              <td>Dünyanın her noktası için anlık hava durumu ve tahmin. Ticari olmayan kullanımda ücretsiz.</td>
+              <td><code>GET api.open-meteo.com/v1/forecast?latitude=41.29&amp;longitude=36.33&amp;current=temperature_2m</code><br><span class="note">Samsun'daki anlık sıcaklık</span></td></tr>
+          <tr><td><a href="https://earthquake.usgs.gov/fdsnws/event/1/">USGS Earthquake</a><br><span class="note">Anahtar yok</span></td>
+              <td>Dünyadaki depremler: büyüklük, yer, derinlik ve zaman. Veri GeoJSON biçiminde geliyor.</td>
+              <td><code>GET earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&amp;minmagnitude=5&amp;limit=10</code></td></tr>
+          <tr><td><a href="https://eonet.gsfc.nasa.gov/docs/v3">NASA EONET</a><br><span class="note">Anahtar yok</span></td>
+              <td>Devam eden orman yangınları, kasırgalar, volkanlar ve seller.</td>
+              <td><code>GET eonet.gsfc.nasa.gov/api/v3/events?status=open</code></td></tr>
+          <tr><td><a href="https://docs.openaq.org/">OpenAQ</a><br><span class="note">Ücretsiz anahtar</span></td>
+              <td>Dünyadaki ölçüm istasyonlarından hava kalitesi (PM2.5, NO₂…). Anahtar <code>X-API-Key</code> başlığında gönderiliyor (Hafta 9'daki konu).</td>
+              <td><code>GET api.openaq.org/v3/locations</code></td></tr>
+        </table>
+
+        <h3>Vahşi yaşam ve biyoçeşitlilik</h3>
+        <table class="api">
+          <tr><th>API</th><th>Ne veriyor?</th><th>Örnek istek</th></tr>
+          <tr><td><a href="https://techdocs.gbif.org/en/openapi/">GBIF</a><br><span class="note">Anahtar yok</span></td>
+              <td>Küresel Biyoçeşitlilik Bilgi Ağı. Türkiye'den <b>4,6 milyonun üzerinde</b> canlı gözlem kaydı var: hangi tür, nerede, ne zaman.</td>
+              <td><code>GET api.gbif.org/v1/occurrence/search?country=TR</code><br><code>GET api.gbif.org/v1/species/match?name=Ursus arctos</code> <span class="note">(boz ayı)</span></td></tr>
+          <tr><td><a href="https://api.inaturalist.org/v1/docs/">iNaturalist</a><br><span class="note">Okuma için anahtar yok</span></td>
+              <td>Doğaseverlerin fotoğrafladığı bitki ve hayvanlar. Türkiye'den <b>724 binin üzerinde</b> gözlem var. Sizin telefonla çektiğiniz bir böcek de bu veriye katılabilir.</td>
+              <td><code>GET api.inaturalist.org/v1/observations?place_id=7183</code> <span class="note">(7183 = Türkiye)</span></td></tr>
+          <tr><td><a href="https://github.com/movebank/movebank-api-doc">Movebank</a><br><span class="note">Açık çalışmalar için</span></td>
+              <td>GPS tasmalı hayvanların göç yolları: albatroslar, leylekler, kurtlar… Araştırmacılar veriyi bu API ile paylaşıyor.</td>
+              <td><code>GET movebank.org/movebank/service/public/json?entity_type=study&amp;study_id=2911040</code> <span class="note">(Galapagos albatrosları)</span></td></tr>
+        </table>
+
+        <h3>Uzay</h3>
+        <div class="row">
+          <div class="col-sm-6"><figure><img class="img-responsive" src="api-talk/earth.jpg" alt="NASA Blue Marble Dünya görüntüsü" loading="lazy"><figcaption class="note">Blue Marble (NASA, kamu malı). NASA görsel kütüphanesi de bir API.</figcaption></figure></div>
+          <div class="col-sm-6"><figure><img class="img-responsive" src="api-talk/iss.jpg" alt="Uluslararası Uzay İstasyonu Özbekistan üzerinde" loading="lazy"><figcaption class="note">Uluslararası Uzay İstasyonu (NASA, kamu malı). Şu an nerede olduğu da bir GET isteğiyle öğrenilebiliyor.</figcaption></figure></div>
+        </div>
+        <table class="api">
+          <tr><th>API</th><th>Ne veriyor?</th><th>Örnek istek</th></tr>
+          <tr><td><a href="https://api.nasa.gov/">NASA APIs</a><br><span class="note">Deneme için <code>DEMO_KEY</code></span></td>
+              <td>Günün astronomi fotoğrafı (APOD), Mars gezgini görüntüleri, Dünya'ya yakın asteroitler.</td>
+              <td><code>GET api.nasa.gov/planetary/apod?api_key=DEMO_KEY</code></td></tr>
+          <tr><td><a href="https://images.nasa.gov/docs/images.nasa.gov_api_docs.pdf">NASA Image Library</a><br><span class="note">Anahtar yok</span></td>
+              <td>NASA'nın fotoğraf ve video arşivinde arama. Bu sayfadaki görseller de oradan geliyor.</td>
+              <td><code>GET images-api.nasa.gov/search?q=hurricane&amp;media_type=image</code></td></tr>
+          <tr><td><a href="https://wheretheiss.at/w/developer">Where the ISS at?</a><br><span class="note">Anahtar yok</span></td>
+              <td>Uluslararası Uzay İstasyonu'nun anlık konumu, yüksekliği (~415 km) ve hızı (~27.600 km/sa).</td>
+              <td><code>GET api.wheretheiss.at/v1/satellites/25544</code></td></tr>
+        </table>
+
+        <p><b>Proje fikri:</b> Bu API'lerin birini kendi API'nizin arkasına koyun. Örneğin <code>GET /trips/{id}/weather</code> kayıtlı doğa yürüyüşünüzün günündeki hava tahminini Open-Meteo'dan alsın. Ya da <code>GET /sightings?species=...</code> Samsun çevresindeki kuş gözlemlerini iNaturalist'ten getirsin. Sonucu önbellekte tutun (Hafta 12) ve dış servis yanıt vermediğinde ne olacağına karar verin.</p>
+        <p class="note">Her servisin kullanım koşulları ve istek sınırları var; projede kullanmadan önce dokümanını okuyun. Bu da derste dokümantasyonu neden yazdığımızın cevabı.</p>
+        </div>
+
+        <!-- 6 -->
+        <h2>6. Teknik konuların müşteriye sağladığı değer</h2>
+        <div class="indent" style="margin-left:40px;">
+        <table class="api">
+          <tr><th>Öğrendiğiniz</th><th>Müşteri için anlamı</th></tr>
+          <tr><td>REST API</td><td>Hizmeti başka uygulamalar kullanabilir.</td></tr>
+          <tr><td>Doğrulama ve hata yanıtları</td><td>Hatalı sipariş sisteme girmez, sorun hemen anlaşılır.</td></tr>
+          <tr><td>Veritabanı</td><td>Sipariş, belge ve işlem kaybolmaz.</td></tr>
+          <tr><td>Önbellek</td><td>Bekleme süresi ve tekrar işlem maliyeti azalır.</td></tr>
+          <tr><td>Postman / HTTPX / test</td><td>Entegrasyon denenebilir, hata bulunabilir.</td></tr>
+          <tr><td>Dokümantasyon</td><td>Başka geliştiriciler hizmeti kullanabilir. Ayrıca satılabilir.</td></tr>
+        </table>
+        </div>
+
+        <!-- 7 -->
+        <h2>7. Vizeye kadar küçük bir hedef</h2>
+        <div class="indent" style="margin-left:40px;">
+        <blockquote class="key">
+          Dönem projenizde, kendi seçtiğiniz konuda kayıt ekleyen ve listeleyen iki endpoint'i eksiksiz çalıştırın.
+          Postman ya da HTTPX ile deneyin ve bir arkadaşınızın kullanabileceği kadar açıklayın.
+        </blockquote>
+        <p>Yeni bir ödev başlatmanız gerekmiyor. Mevcut projenizi bu gözle tamamlayın. Amaç "çok gerideyim" yerine "ilk yapacağım şey belli" demek.</p>
+
+        <h3>Kendimi kontrol ediyorum:</h3>
+        <label style="display:flex; align-items:baseline; gap:6px; font-weight:normal;"><input type="checkbox" id="goal1"> Projemde <code>POST</code> ile kayıt eklenebiliyor, yanıt <code>201</code> dönüyor.</label>
+        <label style="display:flex; align-items:baseline; gap:6px; font-weight:normal;"><input type="checkbox" id="goal2"> <code>GET</code> ile eklediğim kayıtları listeleyebiliyorum.</label>
+        <label style="display:flex; align-items:baseline; gap:6px; font-weight:normal;"><input type="checkbox" id="goal3"> Hatalı veri gönderince sunucu <code>422</code> ile reddediyor ve nedenini okuyabiliyorum.</label>
+        <label style="display:flex; align-items:baseline; gap:6px; font-weight:normal;"><input type="checkbox" id="goal4"> İstekleri Postman ya da HTTPX ile denedim.</label>
+        <label style="display:flex; align-items:baseline; gap:6px; font-weight:normal;"><input type="checkbox" id="goal5"> FastAPI'nin <code>/docs</code> sayfasını açtım; bir arkadaşım README'mi okuyup API'mi kullanabiliyor.</label>
+        <label style="display:flex; align-items:baseline; gap:6px; font-weight:normal;"><input type="checkbox" id="goal6"> Bir isteğin istemciden çıkıp sunucudaki fonksiyona ulaşmasını ve yanıtın geri dönmesini sesli anlatabiliyorum.</label>
+        <p class="note">İşaretleriniz yalnızca bu tarayıcıda saklanır.</p>
+
+        <p><b>Bugün her şeyi bilmeniz gerekmiyor. Küçük bir sistemi anlayarak çalıştırmanız yeterli. Gerisini onun üzerine eklersiniz.</b></p>
+        </div>
+
+        <!-- Kaynaklar -->
+        <h2>Kaynaklar</h2>
+        <div class="indent" style="margin-left:40px;">
+        <ol>
+          <li><a href="https://www.bannerbear.com/">Bannerbear: ürün</a></li>
+          <li><a href="https://www.bannerbear.com/pricing/">Bannerbear: fiyatlandırma</a></li>
+          <li><a href="https://www.bannerbear.com/journey-to-10k-mrr/">Bannerbear: aylık 10.000 $ tekrarlayan gelir yolculuğu</a></li>
+          <li><a href="https://pdfmonkey.io/pricing">PDFMonkey: paketler ve fiyatlar</a></li>
+          <li><a href="https://www.upwork.com/services/product/development-it-api-integration-rest-api-webhooks-automation-2091553814918813414">Upwork: API Integration, REST API, Webhooks &amp; Automation hizmeti</a></li>
+          <li><a href="https://www.upwork.com/freelance-jobs/apply/Shopify-Developer-Needed-API-Integration_~022113751788100879622/">Upwork: Shopify Developer Needed: API Integration ilanı</a></li>
+          <li><a href="https://data.ibb.gov.tr/">İBB Açık Veri Portalı</a></li>
+          <li><a href="https://data.ibb.gov.tr/dataset/ispark-otopark-detay-bilgileri-web-servisi">İBB: İSPARK otopark detay bilgileri web servisi ve kullanım dokümanı</a></li>
+          <li><a href="https://webrazzi.com/2016/09/09/hurriyet-yazilim-gelistiriciler-icin-api-yayinladi/">Webrazzi: Hürriyet, yazılım geliştiriciler için API yayınladı (2016)</a></li>
+          <li><a href="https://open-meteo.com/en/docs">Open-Meteo</a>, <a href="https://earthquake.usgs.gov/fdsnws/event/1/">USGS Earthquake</a>, <a href="https://eonet.gsfc.nasa.gov/docs/v3">NASA EONET</a>, <a href="https://docs.openaq.org/">OpenAQ</a> dokümanları</li>
+          <li><a href="https://techdocs.gbif.org/en/openapi/">GBIF</a>, <a href="https://api.inaturalist.org/v1/docs/">iNaturalist</a>, <a href="https://github.com/movebank/movebank-api-doc">Movebank</a> dokümanları</li>
+          <li><a href="https://api.nasa.gov/">NASA APIs</a>, <a href="https://images.nasa.gov/">NASA Image and Video Library</a>, <a href="https://wheretheiss.at/w/developer">Where the ISS at?</a></li>
+          <li>Görseller: NASA (kamu malı) — Blue Marble (GSFC_20171208_Archive_e001386), ISS (iss073e0424121), Helene Kasırgası (iss072e001649)</li>
+          <li><a href="https://github.com/atesnrllh/api-dersi">API dersi materyalleri</a></li>
+        </ol>
+        </div>
+
+        <br>
+        <img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fismailhakkituran.github.io%2Fapi-motivasyon.html&label=api-talk&icon=github&color=%23198754&message=&style=for-the-badge&tz=Europe%2FIstanbul">
+        <br><br>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Hedef işaretlerini öğrencinin tarayıcısında hatırla
+  document.querySelectorAll('input[type="checkbox"]').forEach(function (box) {
+    var key = 'apitalk-' + box.id;
+    try { box.checked = localStorage.getItem(key) === '1'; } catch (e) {}
+    box.addEventListener('change', function () {
+      try { localStorage.setItem(key, box.checked ? '1' : '0'); } catch (e) {}
+    });
+  });
+</script>
+</body>
+
+</html>
