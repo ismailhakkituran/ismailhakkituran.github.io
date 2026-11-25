@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<!--
+    Plain-Academic by Vasilios Mavroudis
+    Released under the Simplified BSD License/FreeBSD (2-clause) License.
+    https://github.com/mavroudisv/plain-academic
+-->
+
+<html lang="tr">
+<head>
+  <title>Kablosuz Sensör Ağları Lab'ı | İsmail Hakkı Turan</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MYO tekniker öğrencileri için laboratuvar tanıtımı: Kablosuz sensör ağları (WSN), TSCH, TI kartları, sahadan gerçek projeler ve teknikerin işi (flash'lama, donanım testi).">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
+  <style>
+    body { font-size: 16px; }
+    h1, h2, h3, .oswald { font-family: 'Oswald', sans-serif; }
+    h1 { margin-top: 10px; }
+    section.slide { padding: 30px 0 40px; border-bottom: 1px solid #e5e5e5; scroll-margin-top: 10px; }
+    section.slide:last-of-type { border-bottom: none; }
+    .lead-big { font-size: 20px; line-height: 1.5; }
+    .kicker { color: green; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; font-size: 13px; }
+    .card { border: 2px solid #dfe9df; border-radius: 6px; padding: 16px 18px; margin-bottom: 22px; background: #fff; }
+    .card h3 { margin-top: 0; }
+    .card .meta { color: #666; font-size: 14px; margin-bottom: 8px; }
+    .tag { display: inline-block; background: #eef7ee; color: #2d6a2d; border-radius: 3px; padding: 1px 7px; font-size: 12px; margin: 0 4px 4px 0; }
+    .gallery { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; }
+    .gallery figure { flex: 1 1 220px; margin: 0; }
+    .gallery img { width: 100%; height: 190px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd; background: #f5f5f5; }
+    .gallery img.contain { object-fit: contain; background: #fff; }
+    figcaption { font-size: 12px; color: #777; margin-top: 3px; }
+    .video { position: relative; padding-bottom: 56.25%; height: 0; margin: 10px 0; }
+    .video iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 4px; }
+    .placeholder { border: 2px dashed #bbb; border-radius: 6px; color: #888; padding: 30px 15px; text-align: center; background: #fafafa; flex: 1 1 220px; min-height: 150px; display: flex; align-items: center; justify-content: center; }
+    blockquote.key { border-left: 5px solid green; font-size: 18px; background: #f7fbf7; }
+    .why { background: #fffbea; border-left: 4px solid #e6b800; padding: 8px 12px; margin: 10px 0; font-size: 15px; }
+    .steps li { margin-bottom: 6px; }
+    pre { white-space: pre-wrap; font-size: 13px; }
+    svg text { font-family: Helvetica, Arial, sans-serif; }
+    .toc a { display: inline-block; margin: 3px 6px 3px 0; padding: 4px 10px; border: 1px solid #cfe3cf; border-radius: 14px; background: #f7fbf7; }
+    #slide-nav { position: fixed; right: 14px; bottom: 14px; z-index: 50; background: rgba(34,34,34,.85); border-radius: 18px; padding: 4px 6px; }
+    #slide-nav button { background: none; border: none; color: #fff; font-size: 18px; padding: 2px 10px; }
+    #slide-nav span { color: #ccc; font-size: 12px; }
+    .table-wsn td, .table-wsn th { vertical-align: top !important; }
+    @media print { #slide-nav, nav { display: none; } section.slide { page-break-after: always; } }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+	<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+	  <div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+		</div>
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		  <ul class="nav navbar-nav">
+				  <li><a href="index.html">Home</a></li>
+				  <li><a href="wirelessnetworks.html">WSNs</a></li>
+				  <li><a href="systemprogramming.html">System Programming</a></li>
+				  <li><a href="os.html">Operating Systems</a></li>
+				  <li class="active"><a href="lab.html">Lab</a></li>
+		  </ul>
+		</div>
+	  </div>
+	</nav>
+
+<div class="container">
+<div class="row">
+<div class="col-md-10 col-md-offset-1">
+
+<!-- ============================================================ 0. GİRİŞ -->
+<section class="slide" id="giris">
+  <div class="kicker">MYO tekniker öğrencileri için</div>
+  <h1>Kablosuz Sensör Ağları:<br>Laboratuvardan Sahaya</h1>
+  <p class="lead-big">Şeftali bahçesinde donu önceden haber veren, marinada boş iskeleyi bulan, dağda karın erimesini izleyen
+  küçük, pilli cihazlar... Bu cihazları <b>kartı flash'layan, test eden, sahaya kuran</b> kişiler olmadan
+  hiçbiri çalışmaz. Bu sayfada laboratuvarımızı, kullandığımız teknolojileri ve dünyadan örnekleri tanıtıyoruz.</p>
+  <p class="toc">
+    <a href="#lab">1. Lab'ımız</a>
+    <a href="#wsn">2. WSN nedir?</a>
+    <a href="#tsch">3. TSCH</a>
+    <a href="#ti">4. TI kartları</a>
+    <a href="#inria">5. Sahadan projeler (Inria)</a>
+    <a href="#dunkels">6. Adam Dunkels</a>
+    <a href="#tekniker">7. Teknikerin işi</a>
+    <a href="#kapanis">8. Bizimle çalış</a>
+  </p>
+  <p class="text-muted"><small>Sunum ipucu: <kbd>→</kbd> / <kbd>←</kbd> (veya <kbd>PageDown</kbd> / <kbd>PageUp</kbd>) tuşları bölümler arasında geçiş yapar.</small></p>
+</section>
+
+<!-- ============================================================ 1. LAB -->
+<section class="slide" id="lab">
+  <div class="kicker">1</div>
+  <h2>Laboratuvarımız</h2>
+  <!-- TODO: Lab adı, yeri ve kısa tanıtımı buraya. -->
+  <p class="lead-big">Laboratuvarımızda düşük güçlü kablosuz sensör ağları üzerinde çalışıyoruz: kartları programlıyor,
+  ağları kuruyor, ölçüyor ve sonuçlarını yayınlıyoruz. Konum bulma (localization), TSCH zamanlama ve
+  Contiki-NG / Cooja ile benzetim başlıca konularımız.</p>
+  <div class="gallery">
+    <!-- TODO: Kendi lab fotoğraflarını img/lab/ altına koyup aşağıdaki placeholder'ları <figure><img ...></figure> ile değiştir. -->
+    <div class="placeholder">Fotoğraf: Lab genel görünüm</div>
+    <div class="placeholder">Fotoğraf: Masada kartlar / testbed</div>
+    <div class="placeholder">Fotoğraf: Ekip çalışırken</div>
+  </div>
+  <p>Çalışmalarımızdan biri: <i>Mobile Node AoA Localization using a Quadrilateral Anchor Array in TSCH Scheduled WSNs</i>
+  (<a href="https://ieeexplore.ieee.org/abstract/document/10600849">SIU 2024</a>). Diğerleri <a href="index.html">ana sayfada</a>.</p>
+</section>
+
+<!-- ============================================================ 2. WSN -->
+<section class="slide" id="wsn">
+  <div class="kicker">2</div>
+  <h2>Kablosuz Sensör Ağı (WSN) nedir?</h2>
+  <p class="lead-big">Pille (bazen yıllarca) çalışan küçük cihazlar (<b>mote / düğüm</b>) ölçüm yapar, veriyi
+  birbirlerine aktararak (<b>mesh</b>) bir <b>ağ geçidine</b> (gateway) ulaştırır. Ağ geçidi veriyi İnternet'e, oradan da ekrana taşır.</p>
+
+  <svg viewBox="0 0 760 230" width="100%" role="img" aria-label="Sensör düğümlerinden ağ geçidine, oradan sunucu ve ekrana veri akışı">
+    <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2d6a2d"/></marker></defs>
+    <g stroke="#9cc49c" stroke-width="2">
+      <line x1="60" y1="60" x2="170" y2="110"/><line x1="60" y1="170" x2="170" y2="110"/>
+      <line x1="170" y1="110" x2="290" y2="60"/><line x1="170" y1="110" x2="290" y2="170"/>
+      <line x1="290" y1="60" x2="400" y2="115"/><line x1="290" y1="170" x2="400" y2="115"/>
+      <line x1="60" y1="60" x2="60" y2="170" stroke-dasharray="4 4"/>
+    </g>
+    <g fill="#eef7ee" stroke="#2d6a2d" stroke-width="2">
+      <circle cx="60" cy="60" r="16"/><circle cx="60" cy="170" r="16"/><circle cx="170" cy="110" r="16"/>
+      <circle cx="290" cy="60" r="16"/><circle cx="290" cy="170" r="16"/>
+    </g>
+    <rect x="378" y="92" width="64" height="46" rx="6" fill="#2d6a2d"/>
+    <text x="410" y="120" fill="#fff" font-size="12" text-anchor="middle">Gateway</text>
+    <line x1="446" y1="115" x2="540" y2="115" stroke="#2d6a2d" stroke-width="2" marker-end="url(#ar)"/>
+    <text x="493" y="105" font-size="12" text-anchor="middle" fill="#555">İnternet</text>
+    <rect x="548" y="88" width="80" height="54" rx="6" fill="#fff" stroke="#2d6a2d" stroke-width="2"/>
+    <text x="588" y="120" font-size="12" text-anchor="middle">Sunucu</text>
+    <line x1="630" y1="115" x2="668" y2="115" stroke="#2d6a2d" stroke-width="2" marker-end="url(#ar)"/>
+    <rect x="676" y="90" width="70" height="50" rx="4" fill="#fff" stroke="#2d6a2d" stroke-width="2"/>
+    <polyline points="684,128 698,112 710,120 724,100 738,106" fill="none" stroke="#e67e22" stroke-width="2"/>
+    <text x="711" y="156" font-size="12" text-anchor="middle">Grafik</text>
+    <text x="175" y="215" font-size="13" text-anchor="middle" fill="#555">Düğümler (sensör + mikrodenetleyici + radyo + pil)</text>
+    <text x="175" y="20" font-size="12" text-anchor="middle" fill="#555">Veri düğümden düğüme atlar (multi-hop)</text>
+  </svg>
+
+  <table class="table table-bordered table-wsn">
+    <tr><th>Bir düğümün içinde</th><th>Örnek</th></tr>
+    <tr><td>Mikrodenetleyici (MCU)</td><td>ARM Cortex-M (TI CC2652, CC1352, STM32...)</td></tr>
+    <tr><td>Radyo</td><td>IEEE 802.15.4 (2.4 GHz veya Sub-GHz), BLE</td></tr>
+    <tr><td>Sensör</td><td>Sıcaklık, nem, toprak nemi, ivme, ışık, mesafe (ultrasonik)</td></tr>
+    <tr><td>Enerji</td><td>AA pil, düğme pil, güneş paneli</td></tr>
+  </table>
+  <div class="why"><b>Neden zor?</b> Pil yıllarca dayanmalı, ortam gürültülü (Wi-Fi, metal, yağmur, ağaçlar), cihaz ulaşılmaz yerde.
+  Bu yüzden radyoyu <b>çoğu zaman kapalı</b> tutmak ve doğru anda açmak gerekir: işte TSCH bunu yapar.</div>
+</section>
+
+<!-- ============================================================ 3. TSCH -->
+<section class="slide" id="tsch">
+  <div class="kicker">3</div>
+  <h2>TSCH: Zaman Dilimli Kanal Atlamalı Haberleşme</h2>
+  <p class="lead-big"><b>T</b>ime <b>S</b>lotted <b>C</b>hannel <b>H</b>opping (IEEE 802.15.4e, bugün IEEE 802.15.4 standardının parçası).
+  İki fikir var:</p>
+  <ul class="lead-big">
+    <li><b>Zaman dilimi (slot):</b> Herkesin ortak bir saati var; zaman ~10 ms'lik dilimlere bölünür. Her düğüm "hangi dilimde konuşacağını, hangisinde dinleyeceğini" bilir; geri kalan zamanda <b>uyur</b>.</li>
+    <li><b>Kanal atlama:</b> Her dilimde farklı frekans kanalı kullanılır. Bir kanal gürültülüyse bir sonraki denemede başka kanal: <b>parazite dayanıklılık</b>.</li>
+  </ul>
+
+  <svg viewBox="0 0 760 210" width="100%" role="img" aria-label="TSCH çizelgesi: zaman dilimleri ve kanallar ızgarası, bazı hücrelerde A'dan B'ye, B'den C'ye iletimler">
+    <text x="20" y="18" font-size="12" fill="#555">Kanal</text>
+    <g font-size="11" fill="#555" text-anchor="end">
+      <text x="48" y="48">11</text><text x="48" y="78">12</text><text x="48" y="108">13</text><text x="48" y="138">14</text>
+    </g>
+    <g stroke="#ccc" fill="#fff">
+      <rect x="55" y="30" width="660" height="120"/>
+    </g>
+    <g stroke="#e5e5e5">
+      <line x1="55" y1="60" x2="715" y2="60"/><line x1="55" y1="90" x2="715" y2="90"/><line x1="55" y1="120" x2="715" y2="120"/>
+      <line x1="121" y1="30" x2="121" y2="150"/><line x1="187" y1="30" x2="187" y2="150"/><line x1="253" y1="30" x2="253" y2="150"/>
+      <line x1="319" y1="30" x2="319" y2="150"/><line x1="385" y1="30" x2="385" y2="150"/><line x1="451" y1="30" x2="451" y2="150"/>
+      <line x1="517" y1="30" x2="517" y2="150"/><line x1="583" y1="30" x2="583" y2="150"/><line x1="649" y1="30" x2="649" y2="150"/>
+    </g>
+    <g font-size="12" text-anchor="middle">
+      <rect x="57" y="92" width="62" height="26" fill="#c8e6c9"/><text x="88" y="110">A→B</text>
+      <rect x="189" y="32" width="62" height="26" fill="#ffe0b2"/><text x="220" y="50">B→C</text>
+      <rect x="387" y="122" width="62" height="26" fill="#c8e6c9"/><text x="418" y="140">A→B</text>
+      <rect x="519" y="62" width="62" height="26" fill="#ffe0b2"/><text x="550" y="80">B→C</text>
+    </g>
+    <g font-size="11" fill="#555" text-anchor="middle">
+      <text x="88" y="168">0</text><text x="154" y="168">1</text><text x="220" y="168">2</text><text x="286" y="168">3</text><text x="352" y="168">4</text>
+      <text x="418" y="168">5</text><text x="484" y="168">6</text><text x="550" y="168">7</text><text x="616" y="168">8</text><text x="682" y="168">9</text>
+    </g>
+    <text x="385" y="190" font-size="12" text-anchor="middle" fill="#555">Zaman dilimi (slot) → Boş hücrelerde radyo kapalı: pil tasarrufu</text>
+    <line x1="385" y1="25" x2="385" y2="155" stroke="#2d6a2d" stroke-dasharray="4 3"/>
+    <text x="390" y="24" font-size="11" fill="#2d6a2d">slotframe tekrar eder</text>
+  </svg>
+
+  <blockquote class="key">Benzetme: Okulun ders programı gibi. Hangi derste (slot) hangi sınıfta (kanal) kimin konuşacağı bellidir.
+  Ders yoksa öğrenci (radyo) dinlenir.</blockquote>
+  <p>Sonuç: Endüstriyel ortamlarda <b>%99,999'u aşan</b> güvenilirlik ve yıllarca süren pil ömrü (SmartMesh IP bunun ticari örneği).
+  Açık kaynak tarafında <b>OpenWSN</b> ve <b>Contiki-NG</b> TSCH çalıştırır; IETF <b>6TiSCH</b> çalışma grubu bunun üzerine IPv6 taşır.</p>
+</section>
+
+<!-- ============================================================ 4. TI -->
+<section class="slide" id="ti">
+  <div class="kicker">4</div>
+  <h2>TI (Texas Instruments) kartları</h2>
+  <p class="lead-big">Laboratuvarda en çok elimize aldığımız kartlar TI'ın <b>SimpleLink LaunchPad</b> ailesi.
+  Tek kart üzerinde hem çip hem de <b>XDS110 hata ayıklayıcı (debugger)</b> var: USB kablosunu takınca flash'lamaya hazır.</p>
+  <table class="table table-bordered">
+    <tr><th>Kart / çip</th><th>Radyo</th><th>Not</th></tr>
+    <tr><td><a href="https://www.ti.com/tool/LAUNCHXL-CC1352P">LAUNCHXL-CC1352P</a></td><td>Sub-1 GHz + 2.4 GHz</td><td>Uzun menzil + 802.15.4/BLE, dahili XDS110</td></tr>
+    <tr><td>CC2652 LaunchPad</td><td>2.4 GHz (802.15.4, BLE, Zigbee, Thread)</td><td>Çok protokollü</td></tr>
+    <tr><td>CC2650 / CC1310 / CC1350 LaunchPad</td><td>2.4 GHz / Sub-1 GHz</td><td>Önceki nesil, <a href="https://docs.contiki-ng.org/">Contiki-NG</a> ile TSCH</td></tr>
+  </table>
+  <p><b>Yazılım araçları:</b> <a href="https://www.ti.com/tool/UNIFLASH">UniFlash</a> (ücretsiz, Windows/Linux/macOS, grafik + komut satırı),
+  <a href="https://www.ti.com/tool/CCSTUDIO">Code Composer Studio</a>, SimpleLink SDK, eski kartlar için
+  <a href="https://www.ti.com/tool/FLASH-PROGRAMMER">SmartRF Flash Programmer</a>.</p>
+  <div class="gallery">
+    <!-- TODO: Lab'daki LaunchPad fotoğrafını ekle -->
+    <div class="placeholder">Fotoğraf: Lab'daki LaunchPad kartları (USB takılı)</div>
+    <div class="placeholder">Fotoğraf: Kartın yakın çekimi: çip, anten, XDS110 bölümü</div>
+  </div>
+</section>
+
+<!-- ============================================================ 5. INRIA -->
+<section class="slide" id="inria">
+  <div class="kicker">5</div>
+  <h2>Sahadan projeler: Inria (Fransa) – Thomas Watteyne ekibi</h2>
+  <p class="lead-big">TSCH'nin mimarlarından Thomas Watteyne'in ekibi bu teknolojiyi tarlaya, marinaya ve dağa götürdü.</p>
+
+  <!-- PEACH -->
+  <div class="card" id="peach">
+    <h3>🍑 PEACH (SaveThePeaches): Şeftali bahçesinde don tahmini</h3>
+    <div class="meta">Mendoza, Arjantin · 2016–2017 · <span class="tag">SmartMesh IP (TSCH)</span><span class="tag">Raspberry Pi</span><span class="tag">I2C sensör</span></div>
+    <p>Çiçeklenme döneminde sıcaklık birkaç saat 3 °C'nin altına inerse çiçekler dökülüyor. 2013'te Mendoza'daki şeftali üretiminin
+    <b>%85'i</b> dondan kayboldu. Bahçeye farklı yüksekliklerde sıcaklık, bağıl nem ve toprak nemi ölçen kablosuz düğümler kuruldu;
+    veriler sahadaki bir Raspberry Pi üzerinden Paris'teki sunucuya gidiyor ve donu önceden tahmin etmek için kullanılıyor.</p>
+    <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/cZvGw7DyIzI" title="Save The Peaches (VF) – Inria" allow="encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
+    <div class="gallery">
+      <figure><img src="https://project.inria.fr/peach/files/2016/03/motes2.jpg" alt="PEACH projesinde kullanılan kablosuz düğümler" loading="lazy"><figcaption>Düğümler · Görsel: Inria PEACH</figcaption></figure>
+      <figure><img class="contain" src="https://project.inria.fr/peach/files/2016/03/peach_header.png" alt="PEACH proje başlık görseli" loading="lazy"><figcaption>Görsel: Inria PEACH</figcaption></figure>
+    </div>
+    <p><a href="https://project.inria.fr/peach/">Proje sayfası →</a></p>
+    <div class="why"><b>Teknikerin işi:</b> Sensörleri I2C ile karta bağlamak, kutulamak (yağmur, toz), direğe montaj, pil/anten kontrolü, sahada sinyal testi.</div>
+  </div>
+
+  <!-- SMART MARINA -->
+  <div class="card" id="marina">
+    <h3>⛵ SmartMarina: Akıllı yat limanı</h3>
+    <div class="meta">Cap d'Agde, Fransa · 2017 · <span class="tag">Ultrasonik mesafe sensörü</span><span class="tag">Mikrodalga hareket sensörü</span><span class="tag">Akım ölçümü</span></div>
+    <p>Marinadaki her iskelede: <b>tekne bağlı mı?</b> Ne kadar <b>elektrik ve su</b> harcıyor? Nisan 2017'de 7 düğümlük pilot ağ kuruldu.
+    İlk prototipte iki ultrasonik mesafe sensörü (Maxbotix) kullanıldı, sonra mikrodalga hareket sensörlerine geçildi; Aralık 2017'de 14 akım sensörü eklendi.
+    Bu çalışmadan bugün marinalara hizmet veren <a href="https://www.wefalco.com">Falco</a> adlı bir şirket doğdu.</p>
+    <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/CwgyCmJvyuw" title="SmartMarina - ou comment réinventer le port connecté – Inria" allow="encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
+    <div class="gallery">
+      <figure><img src="https://project.inria.fr/smartmarina/files/2017/04/DSC_1360.jpg" alt="SmartMarina sahadan görüntü" loading="lazy"><figcaption>Görsel: Inria SmartMarina</figcaption></figure>
+      <figure><img src="https://project.inria.fr/smartmarina/files/2017/04/DSC_1399.jpg" alt="SmartMarina sahadan görüntü" loading="lazy"><figcaption>Görsel: Inria SmartMarina</figcaption></figure>
+    </div>
+    <h4>Sahada kurulum: Tekne algılayan sensörler (2017)</h4>
+    <p>Beş prototip düğümün dördünde, yüzen iskelenin altına tekneye bakacak şekilde <b>bir çift mikrodalga hareket sensörü</b> monte edildi:
+    Tekne bağlıyken iskele ile tekne arasındaki küçük hareketi algılıyorlar. Bir düğümde ise önündeki engeli (tekneyi) <b>ultrasonik</b> sinyalle algılayan sensör var.
+    Veri SmartMesh IP ağıyla turizm ofisindeki yönetici istasyonuna, oradan buluta gidiyor.</p>
+    <div class="gallery">
+      <figure><img src="https://project.inria.fr/smartmarina/files/2017/08/Image-uploaded-from-iOS-5.jpg" alt="Radyo ve pilin bulunduğu kutunun içi" loading="lazy"><figcaption>Kutunun içi: radyo + pil · Görsel: Inria SmartMarina</figcaption></figure>
+      <figure><img src="https://project.inria.fr/smartmarina/files/2017/08/Image-uploaded-from-iOS-10.jpg" alt="İskele altına monte edilmiş su geçirmez kutulardaki iki mikrodalga sensör" loading="lazy"><figcaption>Su geçirmez kutuda iki mikrodalga sensör · Görsel: Inria SmartMarina</figcaption></figure>
+      <figure><img src="https://project.inria.fr/smartmarina/files/2017/08/Image-uploaded-from-iOS-9.jpg" alt="İskele altına kelepçelerle sabitlenmiş ultrasonik sensör" loading="lazy"><figcaption>Ultrasonik sensör, kablo bağıyla (zip-tie) sabitlenmiş · Görsel: Inria SmartMarina</figcaption></figure>
+      <figure><img src="https://project.inria.fr/smartmarina/files/2017/08/Image-uploaded-from-iOS-3-1.jpg" alt="Sensörün iskelenin altına sıkıştırılması" loading="lazy"><figcaption>Sensör iskelenin altına sabitleniyor · Görsel: Inria SmartMarina</figcaption></figure>
+    </div>
+    <p><a href="https://project.inria.fr/smartmarina/">Proje sayfası →</a> ·
+    <a href="https://project.inria.fr/smartmarina/prototype-sensor-deployed-to-the-cap/">Sensör kurulumu yazısı →</a> ·
+    <a href="https://project.inria.fr/siliconvalley/?p=4304">VivaTech sunumu</a></p>
+    <div class="why"><b>Teknikerin işi:</b> Deniz kenarında su geçirmez kutu, korozyon, sensörü doğru açıyla monte etmek, ölçüm kalibrasyonu.</div>
+  </div>
+
+  <!-- SNOWHOW -->
+  <div class="card" id="snowhow">
+    <h3>🏔️ SnowHow: Dağda kar seviyesi</h3>
+    <div class="meta">Sierra Nevada, Kaliforniya (ABD) · 2016 · <span class="tag">SmartMesh IP (TSCH)</span><span class="tag">26 tekrarlayıcı</span><span class="tag">LiDAR</span></div>
+    <p>Kaliforniya'nın içme ve sulama suyu büyük ölçüde dağlardaki kardan geliyor. Kar örtüsünü izlemek için Southern Sierra
+    Critical Zone Observatory'ye kablosuz ağ kuruldu; Ağustos 2016'da ormanın içine <b>26 tekrarlayıcı (repeater)</b> yerleştirildi.
+    Ağaçların sinyali nasıl kestiğini görmek için LiDAR verisiyle bitki örtüsü modellendi.</p>
+    <div class="gallery">
+      <figure><img src="https://project.inria.fr/snowhow/files/2016/08/deployment.jpg" alt="SnowHow saha kurulumu" loading="lazy"><figcaption>Saha kurulumu · Görsel: Inria SnowHow</figcaption></figure>
+      <figure><img src="https://project.inria.fr/snowhow/files/2016/08/yosemite.jpg" alt="Yosemite bölgesi" loading="lazy"><figcaption>Görsel: Inria SnowHow</figcaption></figure>
+    </div>
+    <p><a href="https://project.inria.fr/snowhow/">Proje sayfası →</a></p>
+    <div class="why"><b>Teknikerin işi:</b> Ulaşılması zor arazide kurulum, karın üstünde kalacak yükseklikte direk, soğukta pil davranışı.</div>
+  </div>
+
+  <!-- OPENWSN -->
+  <div class="card" id="openwsn">
+    <h3>🧩 OpenWSN: Açık kaynak TSCH</h3>
+    <div class="meta">UC Berkeley, 2010'dan beri · <span class="tag">Açık kaynak (BSD)</span><span class="tag">6TiSCH</span><span class="tag">OpenMote</span></div>
+    <p>TSCH'nin açık kaynak referans uygulaması. MSP430'dan Cortex-M'ye 10'dan fazla donanımda çalışıyor; donanım olmadan da
+    bilgisayarda emülatörle denenebiliyor. Projeden <b>OpenMote</b> kartları çıktı.</p>
+    <div class="gallery">
+      <figure style="flex:0 0 160px"><img class="contain" src="https://twatteyne.wordpress.com/wp-content/uploads/2014/02/openwsn_sticker.png" alt="OpenWSN logosu" loading="lazy" style="height:120px"></figure>
+    </div>
+    <p><a href="http://www.openwsn.org">openwsn.org</a> · <a href="https://github.com/openwsn-berkeley/openwsn-fw">GitHub: openwsn-fw</a></p>
+  </div>
+
+  <!-- SMARTMESH -->
+  <div class="card" id="smartmesh">
+    <h3>🏭 SmartMesh IP: Endüstride TSCH</h3>
+    <div class="meta">Dust Networks → Linear Technology → Analog Devices · <span class="tag">Ticari ürün</span><span class="tag">LTC5800</span></div>
+    <p>PEACH ve SnowHow'da kullanılan ticari TSCH ağı. Fabrikalarda, rafinerilerde %99,999'un üzerinde güvenilirlikle çalışır.
+    Düğümler (mote) LTC5800-IPM, yönetici (manager) LTC5800-IPR çipleri üzerine kurulu; başlangıç kiti DC9000.</p>
+    <p><a href="https://twatteyne.wordpress.com/projects/smartmesh-ip/">Watteyne'in SmartMesh IP sayfası →</a> ·
+    <a href="https://www.analog.com/en/product-category/smartmesh-ip.html">Analog Devices ürün sayfası</a></p>
+  </div>
+
+  <p class="text-muted"><small>Daha fazlası: <a href="https://twatteyne.wordpress.com/projects/">Thomas Watteyne – projeler</a></small></p>
+</section>
+
+<!-- ============================================================ 6. DUNKELS -->
+<section class="slide" id="dunkels">
+  <div class="kicker">6</div>
+  <h2>Adam Dunkels: Küçük cihazlara İnternet'i öğreten adam</h2>
+  <p class="lead-big">İsveçli araştırmacı ve girişimci. Bugün milyarlarca cihazda çalışan yazılımları yazdı, sonra bunları şirketlerle sahaya taşıdı.</p>
+
+  <div class="card" id="contiki">
+    <h3>🌐 Contiki, uIP, lwIP, Protothreads</h3>
+    <div class="meta"><span class="tag">İşletim sistemi</span><span class="tag">TCP/IP yığını</span><span class="tag">Açık kaynak</span></div>
+    <ul>
+      <li><b>uIP / lwIP:</b> Birkaç KB belleği olan çiplerin TCP/IP konuşmasını sağlayan ağ yığınları. lwIP bugün pek çok gömülü üründe (modemler, Wi-Fi çipleri) kullanılıyor.</li>
+      <li><b>Contiki:</b> Sensör düğümleri için küçük işletim sistemi. Devamı olan <a href="https://www.contiki-ng.org">Contiki-NG</a>'yi lab'da TSCH için kullanıyoruz; <b>Cooja</b> benzetim aracı da buradan geliyor.</li>
+      <li><b>Protothreads:</b> Çok az bellekle "aynı anda birden fazla iş" yazma yöntemi. 2022'de ACM SenSys "Test of Time" ödülünü aldı.</li>
+    </ul>
+    <div class="gallery">
+      <figure style="flex:0 0 320px"><img src="https://dunkels.com/adam/assets/images/protothreads/acm-test-of-time-award.jpg" alt="Protothreads ACM SenSys Test of Time ödülü" loading="lazy"><figcaption>Görsel: dunkels.com</figcaption></figure>
+    </div>
+    <p><a href="https://dunkels.com/adam/protothreads-acm-sensys-test-of-time-award/">Ödül yazısı →</a> ·
+    <a href="https://en.wikipedia.org/wiki/Contiki">Contiki (Wikipedia)</a> · <a href="https://en.wikipedia.org/wiki/LwIP">lwIP (Wikipedia)</a></p>
+  </div>
+
+  <div class="card" id="magaza">
+    <h3>🛒 Kamerasız mağaza sensörleri (Electrolux ile)</h3>
+    <div class="meta"><span class="tag">Düğme pil</span><span class="tag">Titreşim + ışık sensörü</span><span class="tag">Mesh</span></div>
+    <p>Mağazada sergilenen ürünlere (süpürge, çamaşır makinesi...) yapıştırılan düğme pilli sensörler, ürünün elle tutulmasını (titreşim) ve ışık değişimini algılıyor.
+    Böylece kamera kullanmadan, kişisel veri toplamadan "müşteriler hangi ürünle ilgileniyor?" sorusu yanıtlanıyor.</p>
+    <div class="gallery">
+      <figure><img src="https://dunkels.com/adam/assets/images/iot-shopping-network-without-cameras/shopper.jpg" alt="Mağazada müşteri" loading="lazy"><figcaption>Görsel: dunkels.com</figcaption></figure>
+      <figure><img src="https://dunkels.com/adam/assets/images/iot-shopping-network-without-cameras/sensor1.jpg" alt="Düğme pilli sensör" loading="lazy"><figcaption>Sensör · Görsel: dunkels.com</figcaption></figure>
+      <figure><img src="https://dunkels.com/adam/assets/images/iot-shopping-network-without-cameras/mesh.jpg" alt="Mağazadaki mesh ağı" loading="lazy"><figcaption>Mesh ağı · Görsel: dunkels.com</figcaption></figure>
+    </div>
+    <p><a href="https://dunkels.com/adam/iot-shopping-network-without-cameras/">Yazının tamamı →</a></p>
+  </div>
+
+  <div class="card" id="cekmece">
+    <h3>🗄️ "Çekmecedeki şehir": Büyük ağı küçük lab'da test etmek</h3>
+    <div class="meta"><span class="tag">Testbed</span><span class="tag">Donanım testi</span></div>
+    <p>Şehir ölçeğinde yüzlerce düğümlük bir mesh ağını sahaya çıkmadan nasıl test edersiniz? Tüm kartlar bir masaya konuyor,
+    yazılımla "hangi düğüm hangisini duyabilir" filtresi uygulanıyor; böylece kartlar sanki şehre dağılmış gibi davranıyor.
+    <b>Bir teknikerin günlük işine en yakın örnek.</b></p>
+    <div class="gallery">
+      <figure><img src="https://dunkels.com/adam/assets/images/large-scale-testing/testbed-small.jpg" alt="Masadaki testbed kartları" loading="lazy"><figcaption>Testbed · Görsel: dunkels.com</figcaption></figure>
+      <figure><img src="https://dunkels.com/adam/assets/images/large-scale-testing/simulated-positions.gif" alt="Simüle edilmiş düğüm konumları animasyonu" loading="lazy"><figcaption>Sanal konumlar · Görsel: dunkels.com</figcaption></figure>
+      <figure><img class="contain" src="https://dunkels.com/adam/assets/images/large-scale-testing/mesh-view.png" alt="Mesh ağ görünümü" loading="lazy"><figcaption>Ağ görünümü · Görsel: dunkels.com</figcaption></figure>
+    </div>
+    <p><a href="https://dunkels.com/adam/large-scale-testing/">Yazının tamamı →</a></p>
+  </div>
+
+  <div class="card" id="beacon">
+    <h3>📡 100+ Bluetooth beacon'ı aynı anda test etmek</h3>
+    <div class="meta"><span class="tag">nRF52840</span><span class="tag">OTA güncelleme</span><span class="tag">Stres testi</span></div>
+    <p>Yüzlerce cihaza aynı anda kablosuz yazılım güncellemesi (OTA) göndermek: Hepsi güncellendi mi? Yarıda kalan olursa ne olur?</p>
+    <div class="gallery">
+      <figure style="flex:0 0 420px"><img class="contain" src="https://dunkels.com/adam/assets/images/stress-testing-bluetooth-beacons/testbed.png" alt="Beacon testbed" loading="lazy"><figcaption>Görsel: dunkels.com</figcaption></figure>
+    </div>
+    <p><a href="https://dunkels.com/adam/stress-testing-next-generation-beacons/">Yazının tamamı →</a></p>
+  </div>
+
+  <div class="card" id="watchdog">
+    <h3>🐶 "Cihaz yaşıyor görünüyor ama aslında ölü"</h3>
+    <div class="meta"><span class="tag">Watchdog timer</span><span class="tag">Hata ayıklama</span></div>
+    <p>LED yanıp sönüyor, cihaz cevap veriyor gibi... ama asıl işini yapmıyor. Yazılımsal <b>watchdog</b> ile bu durumun nasıl yakalanacağı.
+    Sahada "çalışıyor mu?" sorusunun cevabı göründüğü kadar basit değil.</p>
+    <p><a href="https://dunkels.com/adam/sometimes-your-device-is-alive-but-is-actually-dead/">Yazının tamamı →</a></p>
+  </div>
+
+  <p class="text-muted"><small>Daha fazlası: <a href="https://dunkels.com/adam/">dunkels.com/adam</a></small></p>
+</section>
+
+<!-- ============================================================ 7. TEKNİKER -->
+<section class="slide" id="tekniker">
+  <div class="kicker">7</div>
+  <h2>Peki tekniker ne yapar? Flash'lama ve donanım testi</h2>
+  <p class="lead-big">Mühendis yazılımı yazar; ama yazılımın <b>karta yüklenmesi</b>, kartın <b>doğru çalıştığının kanıtlanması</b>
+  ve cihazın <b>sahaya sağlam kurulması</b> teknikerin ustalığına bağlıdır.</p>
+
+  <h3>⚡ Flash'lama (yazılımı karta yüklemek)</h3>
+  <div class="row">
+    <div class="col-md-6">
+      <p><b>Yol 1: Grafik arayüz (TI UniFlash)</b></p>
+      <ol class="steps">
+        <li>LaunchPad'i USB ile bağla (dahili XDS110 hata ayıklayıcı tanınır).</li>
+        <li>UniFlash'ta kartı/çipi seç.</li>
+        <li>Derlenmiş dosyayı (<code>.hex</code> / <code>.bin</code> / <code>.out</code>) seç, <b>Load Image</b>.</li>
+        <li>Kartı resetle, LED'i / seri portu kontrol et.</li>
+      </ol>
+    </div>
+    <div class="col-md-6">
+      <p><b>Yol 2: Komut satırı (Contiki-NG)</b></p>
+<pre>
+# Derle ve seri porttan yükle
+make TARGET=openmote BOARD=openmote-cc2538 hello-world.upload
+
+# Birden fazla kart varsa portu belirt
+make PORT=/dev/ttyUSB0 cc26xx-demo.upload
+
+# Seri porttan çıktıyı izle
+make login
+</pre>
+      <p class="text-muted"><small>Not: Yeni bir CC26xx/CC13xx çipi seri bootloader çalışmadan önce bir kez JTAG ile silinmeli.
+      OpenMote-B'de bootloader için PA7 GND'ye kısa devre edilip reset'e basılır.
+      Kaynak: <a href="https://docs.contiki-ng.org/en/develop/doc/platforms/cc26x0-cc13x0.html">Contiki-NG CC26xx/CC13xx</a>,
+      <a href="https://docs.contiki-ng.org/en/develop/doc/platforms/openmote.html">Contiki-NG OpenMote</a>.</small></p>
+    </div>
+  </div>
+  <div class="gallery">
+    <!-- TODO: Flash'lama fotoğrafları/ekran görüntüleri -->
+    <div class="placeholder">Fotoğraf: Kart USB ile bilgisayara bağlı, flash'lanıyor</div>
+    <div class="placeholder">Ekran görüntüsü: UniFlash "Load Image"</div>
+    <div class="placeholder">Fotoğraf: JTAG / harici debugger kablosu</div>
+  </div>
+
+  <h3>🔍 Donanım testi kontrol listesi</h3>
+  <table class="table table-bordered">
+    <tr><th>Test</th><th>Araç</th><th>Neye bakıyoruz?</th></tr>
+    <tr><td>Besleme gerilimi</td><td>Multimetre</td><td>3.3 V doğru mu? Pil gerilimi yeterli mi?</td></tr>
+    <tr><td>Akım tüketimi</td><td>Osiloskop + şönt direnç, güç profilleyici (TI EnergyTrace vb.)</td><td>Uykuda µA, radyo açıkken mA: TSCH slotlarını akım grafiğinde <b>görmek</b> mümkün!</td></tr>
+    <tr><td>Haberleşme hatları</td><td>Lojik analizör</td><td>SPI / I2C / UART sinyalleri doğru mu? Sensör cevap veriyor mu?</td></tr>
+    <tr><td>Yaşam belirtisi</td><td>LED, seri port terminali</td><td>Açılış mesajı, hata kodu, "alive ama dead" durumu</td></tr>
+    <tr><td>Radyo / menzil</td><td>İki kart + RSSI ölçümü</td><td>Kaç metrede bağlantı kopuyor? Engel, anten yönü etkisi</td></tr>
+    <tr><td>Saha dayanımı</td><td>Gözle kontrol, su/toz testi</td><td>Kutu, conta, kablo rakoru, montaj</td></tr>
+  </table>
+  <div class="gallery">
+    <!-- TODO: Donanım testi fotoğrafları -->
+    <div class="placeholder">Fotoğraf: Multimetre ile gerilim ölçümü</div>
+    <div class="placeholder">Fotoğraf: Osiloskopta akım tüketimi (TSCH slotları)</div>
+    <div class="placeholder">Fotoğraf: Lojik analizör / lehim</div>
+  </div>
+
+  <h3>🏢 Testbed: Yüzlerce kart bir binada</h3>
+  <p>Fransa'daki <a href="https://www.iot-lab.info">FIT IoT-LAB</a>'da 1.500'den fazla düğüm bulunuyor; kartlar uzaktan flash'lanıyor,
+  enerji tüketimleri <a href="https://www.iot-lab.info/docs/tools/consumption-monitoring/">otomatik ölçülüyor</a>.
+  Bu kartları raflara yerleştiren, kablolayan ve arızalıları değiştiren yine teknik ekip.</p>
+  <div class="gallery">
+    <figure><img src="https://www.iot-lab.info/assets/images/docs/boards/iot-lab-m3/bradbury.jpg" alt="IoT-LAB testbed'inde yanan LED'ler" loading="lazy"><figcaption>Testbed'de çalışan düğümler · Görsel: FIT IoT-LAB (CC BY-SA 4.0)</figcaption></figure>
+    <figure><img class="contain" src="https://www.iot-lab.info/assets/images/docs/boards/iot-lab-m3/m3-impl.png" alt="IoT-LAB M3 kartı" loading="lazy"><figcaption>IoT-LAB M3 kartı · Görsel: FIT IoT-LAB (CC BY-SA 4.0)</figcaption></figure>
+    <figure><img class="contain" src="https://www.iot-lab.info/assets/images/docs/boards/iot-lab-m3/m3-archi.png" alt="IoT-LAB M3 kart mimarisi" loading="lazy"><figcaption>Kart mimarisi · Görsel: FIT IoT-LAB (CC BY-SA 4.0)</figcaption></figure>
+  </div>
+  <div class="gallery">
+    <figure><img src="https://www.iot-lab.info/assets/images/boards/nrf52840dk.jpg" alt="nRF52840 DK kartı" loading="lazy"><figcaption>nRF52840 DK · Görsel: FIT IoT-LAB (CC BY-SA 4.0)</figcaption></figure>
+    <figure><img src="https://www.iot-lab.info/assets/images/boards/firefly.jpg" alt="Zolertia Firefly kartı" loading="lazy"><figcaption>Firefly · Görsel: FIT IoT-LAB (CC BY-SA 4.0)</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============================================================ 8. KAPANIŞ -->
+<section class="slide" id="kapanis">
+  <div class="kicker">8</div>
+  <h2>Bizimle çalışmak ister misin?</h2>
+  <p class="lead-big">Lehim yapmayı, kart programlamayı, ölçüm almayı seviyorsan; laboratuvarımızda staj ve proje fırsatları için yaz.</p>
+  <!-- TODO: Staj / gönüllü çalışma koşullarını netleştir -->
+  <ul class="lead-big">
+    <li>📧 hakki.turan[at]bil.omu.edu.tr</li>
+    <li>📍 Oda 236-C, Bilgisayar Mühendisliği Bölümü, Ondokuz Mayıs Üniversitesi, Atakum/Samsun</li>
+    <li>📷 <a href="https://instagram.com/sandukca_research">Araştırma günlüğü (Instagram)</a></li>
+  </ul>
+  <blockquote class="key">Sahadaki her sensörün arkasında, onu çalışır hâle getiren bir tekniker vardır.</blockquote>
+</section>
+
+</div>
+</div>
+</div>
+
+<div id="slide-nav" aria-label="Bölüm gezinme">
+  <button type="button" id="prev" title="Önceki bölüm (←)">‹</button>
+  <span id="pos"></span>
+  <button type="button" id="next" title="Sonraki bölüm (→)">›</button>
+</div>
+
+<script>
+  (function () {
+    var slides = Array.prototype.slice.call(document.querySelectorAll('section.slide'));
+    var pos = document.getElementById('pos');
+    function current() {
+      var y = window.scrollY + 40, idx = 0;
+      slides.forEach(function (s, i) { if (s.offsetTop <= y) idx = i; });
+      return idx;
+    }
+    function go(i) {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      slides[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    function update() { pos.textContent = (current() + 1) + ' / ' + slides.length; }
+    document.getElementById('prev').onclick = function () { go(current() - 1); };
+    document.getElementById('next').onclick = function () { go(current() + 1); };
+    document.addEventListener('keydown', function (e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(current() + 1); }
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(current() - 1); }
+    });
+    window.addEventListener('scroll', update);
+    update();
+  })();
+</script>
+
+<a style="color:#b5bec9;font-size:0.8em; float:right;" href="https://github.com/mavroudisv/plain-academic">Plain Academic</a>
+
+</body>
+</html>
